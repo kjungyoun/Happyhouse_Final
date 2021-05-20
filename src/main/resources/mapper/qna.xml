@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+	"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.ssafy.happyhouse.model.mapper.QnaMapper">
+
+	<insert id="writeQna" parameterType="qnaDto">
+		insert into qna ( userid, title, contents, repl)
+		values ( #{userid}, #{title}, #{contents}, #{repl})
+	</insert>
+
+	<select id="getQna" parameterType="int" resultType="qnaDto">
+		select no, userid, title, regdate, contents, repl from qna
+		where no = #{no}
+	</select>
+
+	<select id="searchAll" parameterType="pageBean" resultType="qnaDto">
+		select no, userid, title, regdate, contents, repl from qna
+		<where>
+			<if test="key != null and key != 'all' and word != null and word != ''">
+				${key} like concat('%',#{word},'%')
+			</if>
+		</where>
+		order by no desc limit #{startNo}, #{interval};
+	</select>
+	
+	<select id="totalCount"   parameterType="pageBean"  resultType="int"  >
+		select count(*) from qna
+		<where>
+			<if test="key != null and key != 'all' and word != null and word != ''">
+				${key} like concat('%',#{word},'%')
+			</if>
+		</where>
+	</select>
+	
+	<update id="modifyQna" parameterType="qnaDto">
+		update qna
+		set title = #{title}, contents = #{contents}, regdate = #{regdate}
+		where no=#{no} 
+	</update>
+	
+	<delete id="deleteQna" parameterType="int">
+		delete from qna
+		where no = #{no}
+	</delete>
+	
+</mapper>
