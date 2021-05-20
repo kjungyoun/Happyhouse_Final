@@ -27,4 +27,13 @@ public class HomeController {
 		return "qna";
 	}
 	
+	@RequestMapping(value="/pollutionInfo", method=RequestMethod.GET)
+	public String pollution() {
+		return "pollutionInfo";
+	}
+	
+	@RequestMapping(value="/shopInfo", method=RequestMethod.GET)
+	public String shop() {
+		return "shopInfo";
+	}
 }

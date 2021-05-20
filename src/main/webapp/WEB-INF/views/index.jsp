@@ -5,6 +5,7 @@
 <!DOCTYPE html>
 <html lang="en">
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+<script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey=91faec44501a2bd12af0827ba9208626&libraries=services,clusterer,drawing"></script>
 <script type="text/javascript">
 	$(document).ready(function(){
 		if('${msg}'){
@@ -13,7 +14,14 @@
 				fadeDuration: 250
 			})
 		}
-	})
+			var container = document.getElementById('map');
+		var options = {
+			center: new kakao.maps.LatLng(33.450701, 126.570667),
+			level: 3
+		};
+
+		var map = new kakao.maps.Map(container, options);
+		})
 </script>
 <body>
 <jsp:include page="include/header.jsp"/>
@@ -106,41 +114,16 @@
 
     <!-- ======= Features Section ======= -->
     <section id="features" class="features">
-      <div class="container">
-        <div class="row">
-          <div class="col-lg-4 mb-5 mb-lg-0" data-aos="fade-right">
-            <ul class="nav nav-tabs flex-column">
-              <li class="nav-item"><a class="nav-link active show"
-                data-toggle="tab" href="#map">
-                  <h4>아파트/주택 실거래가 검색</h4>
-              </a></li>
-              <li class="nav-item mt-2"><a class="nav-link"
-                data-toggle="tab" href="#detail">
-                  <h4>실거래가 상세 검색</h4>
-              </a></li>
-              <li class="nav-item mt-2"><a class="nav-link"
-                data-toggle="tab" href="#srcdong">
-                  <h4>동 이름으로 검색해보세요.</h4>
-              </a></li>
-              <li class="nav-item mt-2"><a class="nav-link"
-                data-toggle="tab" href="#srcapt">
-                  <h4>아파트 이름으로 검색해보세요.</h4>
-              </a></li>
-            </ul>
-            <div class="text-center" style="margin-top: 90px;">
-              <button type="button" class="btn btn-info" onclick="location.href='pollutionInfo.jsp'">환경정보 보기</button>
-              <button type="button" class="btn btn-warning ml-2" onclick="location.href='shopInfo.jsp'">주변상권 보기</button>
-            </div>
-          </div>
-          <div class="col-lg-7 ml-auto" data-aos="fade-left">
-            <div class="tab-content">
-              <div class="tab-pane active show" id="map">
-
-                <form method="get" action="${root}/house/searchSelect">
+      <div class="container" data-aos="fade-up">
+    <div class="card">
+    <div class="card-header bg-dark"><h2 class="text-center text-light card-title">아파트/주택 실거래가 검색</h2></div>
+    <div class="card-body">
+		<div class="text-center" style="margin-top: 10px;">
+            <form method="get" action="${root}/house/searchSelect">
                   <div class="form-group d-inline-block">
                     <select class="form-control" id="sel1" name="key1">
                       <option disabled selected value="all">시/도</option>
-                      <option >서울시</option>
+                      <option>서울시</option>
                       <option>경기도</option>
                       <option>인천시</option>
                     </select>
@@ -166,56 +149,22 @@
                     <button type="submit" class="btn btn-primary mb-1">검색</button>
                   </div>
                 </form>
-                <iframe
-                  src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3168.5607561223096!2d126.74783201543875!3d37.423855740043976!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x357b7b13aab9ed93%3A0x3abb0d0829c86fdb!2z7Iqk7YOA67KF7IqkIOyduOyynOyEnOywveygkA!5e0!3m2!1sko!2skr!4v1615476247568!5m2!1sko!2skr"
-                  width="600" height="450" style="border: 0;"> </iframe>
-              </div>
-              <div class="tab-pane" id="detail">
-              <form method="get" action="${root}/house/search">
-              <div class="form-group d-inline-block">
-                    <button type="submit" class="btn btn-primary mb-1">상세 검색하러 가기</button>
-                  </div>
-              </form>
-              <iframe
-                  src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3168.5607561223096!2d126.74783201543875!3d37.423855740043976!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x357b7b13aab9ed93%3A0x3abb0d0829c86fdb!2z7Iqk7YOA67KF7IqkIOyduOyynOyEnOywveygkA!5e0!3m2!1sko!2skr!4v1615476247568!5m2!1sko!2skr"
-                  width="600" height="450" style="border: 0;"> </iframe>
-              </div>
-              <div class="tab-pane" id="srcdong">
-                <div class="container mt-3">
-                  <form method="get" action="${root}/house/search">
-                  <input type="hidden" name="key" value="dong">
-                  <iframe
-                    src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3168.5607561223096!2d126.74783201543875!3d37.423855740043976!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x357b7b13aab9ed93%3A0x3abb0d0829c86fdb!2z7Iqk7YOA67KF7IqkIOyduOyynOyEnOywveygkA!5e0!3m2!1sko!2skr!4v1615476247568!5m2!1sko!2skr"
-                    width="600" height="300" style="border: 0;"> </iframe>
-                  <div class="input-group mb-3 mt-2">
-                    <input type="text" class="form-control" name="word" value="">
-                    <div class="input-group-append">
-                      <button class="btn btn-success" type="submit">검색</button>
-                    </div>
-                  </div>
-                  </form>
-                </div>
-              </div>
-              <div class="tab-pane" id="srcapt">
-                <div class="container mt-3">
-                <form method="get" action="${root}/house/search">
-                <input type="hidden" name="key" value="AptName">
-                  <iframe
-                    src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3168.5607561223096!2d126.74783201543875!3d37.423855740043976!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x357b7b13aab9ed93%3A0x3abb0d0829c86fdb!2z7Iqk7YOA67KF7IqkIOyduOyynOyEnOywveygkA!5e0!3m2!1sko!2skr!4v1615476247568!5m2!1sko!2skr"
-                    width="600" height="300" style="border: 0;"> </iframe>
-                  <div class="input-group mb-3 mt-2">
-                    <input type="text" class="form-control" name="word" value="">
-                    <div class="input-group-append">
-                      <button class="btn btn-success" type="submit">검색</button>
-                    </div>
-                  </div>
-                  </form>
-                </div>
-              </div>
             </div>
-          </div>
-        </div>
-      </div>
+            
+			<!-- ============ Kakao Map API ============ -->
+            <div id="map" style="width:1000px;height:600px; margin-left: auto; margin-right: auto"></div>
+            
+            
+	</div> 
+    <div class="card-footer">
+		<div class="text-center">
+                <button type="button" class="btn btn-success" onclick="location.href='/pollutionInfo'">환경정보 보러가기</button>
+              <button type="button" class="btn btn-warning ml-2" onclick="location.href='/shopInfo'">주변상권 보러가기</button>
+           </div>   
+	</div>
+  </div>     
+ 	</div>
+  		
     </section><!-- End Features Section -->
    
     <!-- ======= Team Section ======= -->
