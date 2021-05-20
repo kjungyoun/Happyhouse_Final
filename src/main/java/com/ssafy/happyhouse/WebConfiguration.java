@@ -25,6 +25,10 @@ public class WebConfiguration extends WebMvcConfigurerAdapter {
         registry.addResourceHandler("/assets/**")
                 .addResourceLocations("classpath:/static/assets/")
                 .setCachePeriod(20);
+        
+        registry.addResourceHandler("/js/**")
+        .addResourceLocations("classpath:/static/js/")
+        .setCachePeriod(20);
     }
 
 

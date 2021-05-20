@@ -1,12 +1,13 @@
 package com.ssafy.happyhouse.model.mapper;
 
 import java.util.List;
-import java.util.Map;
 
 import org.apache.ibatis.annotations.Mapper;
 
 import com.ssafy.happyhouse.model.PageBean;
 import com.ssafy.happyhouse.model.QnaDto;
+
+
 
 @Mapper
 public interface QnaMapper {

@@ -106,7 +106,7 @@
                 <input name="userpwd" id="userpwdL" class="form-control" placeholder="Password" type="password">
               </div> <!-- form-group// -->
               <div class="form-group">
-                <button type="button" onclick="javascript:login();" id="login-btn" class="btn btn-primary btn-block" data-dismiss="modal"> 로그인 </button>
+                <button type="button" onclick="javascript:login();" id="login-btn" class="btn btn-primary btn-block" > 로그인 </button>
               </div> <!-- form-group// -->      
               <p class="text-center">비밀번호를 잊어버리셨나요? <a data-dismiss="modal" data-toggle="modal" href="#findPWModal">비밀번호 찾기</a> </p>                                                                 
             </form>

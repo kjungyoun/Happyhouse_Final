@@ -10,12 +10,12 @@
 	</insert>
 
 	<select id="getQna" parameterType="int" resultType="qnaDto">
-		select no, userid, title, regdate, contents, repl from qna
+		select no, userid, title, contents, repl, regdate from qna
 		where no = #{no}
 	</select>
 
 	<select id="searchAll" parameterType="pageBean" resultType="qnaDto">
-		select no, userid, title, regdate, contents, repl from qna
+		select no, userid, title, contents, repl, regdate from qna
 		<where>
 			<if test="key != null and key != 'all' and word != null and word != ''">
 				${key} like concat('%',#{word},'%')
@@ -35,7 +35,7 @@
 	
 	<update id="modifyQna" parameterType="qnaDto">
 		update qna
-		set title = #{title}, contents = #{contents}, regdate = #{regdate}
+		set title = #{title}, contents = #{contents}, repl = #{repl}
 		where no=#{no} 
 	</update>
 	

@@ -5,6 +5,7 @@ import java.util.List;
 import com.ssafy.happyhouse.model.PageBean;
 import com.ssafy.happyhouse.model.QnaDto;
 
+
 public interface QnaService {
 
 	//질문 글 작성

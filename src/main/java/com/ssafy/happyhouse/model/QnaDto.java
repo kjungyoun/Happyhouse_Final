@@ -52,11 +52,11 @@ public class QnaDto {
 		this.contents = contents;
 	}
 
-	public String getReply() {
+	public String getRepl() {
 		return repl;
 	}
 
-	public void setReply(String repl) {
+	public void setRepl(String repl) {
 		this.repl = repl;
 	}
 
@@ -74,6 +74,12 @@ public class QnaDto {
 
 	public void setLoginId(String loginId) {
 		this.loginId = loginId;
+	}
+
+	@Override
+	public String toString() {
+		return "QnaDto [no=" + no + ", userid=" + userid + ", title=" + title + ", contents=" + contents + ", repl="
+				+ repl + ", regdate=" + regdate + ", loginId=" + loginId + "]";
 	}
 	
 	

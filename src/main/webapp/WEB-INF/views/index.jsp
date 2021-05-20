@@ -4,6 +4,17 @@
 <c:set var="root" value="${pageContext.request.contextPath}"/>
 <!DOCTYPE html>
 <html lang="en">
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+<script type="text/javascript">
+	$(document).ready(function(){
+		if('${msg}'){
+			alert('${msg}')
+			$('#loginModal').modal({
+				fadeDuration: 250
+			})
+		}
+	})
+</script>
 <body>
 <jsp:include page="include/header.jsp"/>
   <!-- ======= Hero Section ======= -->

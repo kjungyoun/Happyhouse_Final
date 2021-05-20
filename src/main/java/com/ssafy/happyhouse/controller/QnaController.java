@@ -15,13 +15,13 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.ssafy.happyhouse.model.MemberDto;
 import com.ssafy.happyhouse.model.PageBean;
 import com.ssafy.happyhouse.model.QnaDto;
 import com.ssafy.happyhouse.model.service.QnaService;
-import com.ssafy.happyhouse.model.MemberDto;
+
 
 @RestController
 @RequestMapping("/qna.do")
@@ -34,6 +34,10 @@ public class QnaController {
 	@GetMapping("/getLoginId")
 	public ResponseEntity<String> getLoginId(HttpSession session) {
 		MemberDto curId = (MemberDto)session.getAttribute("userinfo");
+		if(curId == null) {
+			return null;
+		}
+//		System.out.println("=================getLoginId================"+curId);
 		return new ResponseEntity<String>(curId.getUserid(),HttpStatus.OK);
 	}
 	
@@ -47,8 +51,9 @@ public class QnaController {
 	public ResponseEntity<QnaDto> getQna(@PathVariable int no, HttpSession session) {
 		QnaDto dto = qnaService.getQna(no);
 		MemberDto curId = (MemberDto)session.getAttribute("userinfo");
-		System.out.println("================================="+curId);
-//		dto.setLoginId(curId.getUserid())
+		if(curId != null) 
+			dto.setLoginId(curId.getUserid());
+		System.out.println(dto);
 		return new ResponseEntity<QnaDto>(dto,HttpStatus.OK);
 	}
 	
@@ -62,7 +67,8 @@ public class QnaController {
 	}
 	
 	@PutMapping("{no}")
-	public ResponseEntity<Integer> modifyQna(@RequestBody QnaDto qnaDto) {
+	public ResponseEntity<Integer> modifyQna(@RequestBody QnaDto qnaDto, @PathVariable int no) {
+		qnaDto.setNo(no);
 		int ret = qnaService.modifyQna(qnaDto);
 		return new ResponseEntity<Integer>(ret,HttpStatus.OK);
 	}

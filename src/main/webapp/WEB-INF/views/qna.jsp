@@ -10,9 +10,9 @@
 	href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css"
 	integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh"
 	crossorigin="anonymous">
-<link href="/js/app.0107a88b.js" rel="preload" as="script">
-<link href="/js/chunk-vendors.d631ffaf.js" rel="preload" as="script">
-    <title>sgksk</title>
+ <link href="/js/app.27bede0a.js" rel="preload" as="script" />
+    <link href="/js/chunk-vendors.d631ffaf.js" rel="preload" as="script" />
+    <title>HappyHouse</title>
   </head>
   <body>
   <jsp:include page="include/header.jsp"/>
@@ -31,7 +31,7 @@
     </noscript>
     <div id="app"></div>
 	<script src="/js/chunk-vendors.d631ffaf.js"></script>
-	<script src="/js/app.0107a88b.js"></script>
+    <script src="/js/app.27bede0a.js"></script>
     <!-- built files will be auto injected -->
     
     <jsp:include page="include/footer.jsp"/>

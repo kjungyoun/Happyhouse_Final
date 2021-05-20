@@ -11,6 +11,7 @@ import com.ssafy.happyhouse.model.QnaDto;
 import com.ssafy.happyhouse.model.mapper.QnaMapper;
 import com.ssafy.happyhouse.util.PageUtility;
 
+
 @Service
 public class QnaServiceImpl implements QnaService {
 
@@ -33,7 +34,8 @@ public class QnaServiceImpl implements QnaService {
 	
 	@Override
 	public QnaDto getQna(int no) {
-		return qnaMapper.getQna(no);
+		QnaDto dto= qnaMapper.getQna(no);
+		return dto;
 	}
 
 	@Override
