@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+	"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.ssafy.happyhouse.model.mapper.AddressMapper">
+
+	<select id="findCity"  resultType="string">
+		select distinct city from baseaddress
+	</select>
+	
+	<select id="findGugun" parameterType="string" resultType="string">
+		select distinct gugun from baseaddress
+		<where>
+			city like concat('%', #{city}, '%')
+		</where>
+	</select>
+	
+	<select id="findDong" parameterType="baseAddr" resultType="string">
+		select distinct dong from baseaddress
+		<where>
+			city like concat('%',#{city},'%')
+			and
+			gugun like concat('%',#{gugun},'%')
+		</where>
+	</select>
+	
+</mapper>

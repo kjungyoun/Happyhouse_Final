@@ -21,7 +21,72 @@
 		};
 
 		var map = new kakao.maps.Map(container, options);
+		
+		// 웹 페이지 시작시 city 정보 select box에 담기
+		getCityInfo();
 		})
+</script>
+<script type="text/javascript">
+	function getCityInfo(){
+		$.ajax({
+			type:'GET',
+			url:'/option/city',
+			dataType:'json',
+			success: function(result){
+				// select box 초기화
+				$('#city').find('option').remove().end().append("<option disabled selected value=''>시/도</option>")
+				
+				// List 개수만큼 option 추가
+				$.each(result,function(idx){
+					$('#city').append("<option value='"+result[idx]+"'>"+result[idx]+"</option>")
+				})
+			},
+			error : function(jqXHR, status, err){
+				alert('city 정보를 가져오는 중 오류 발생!')
+			}
+		})
+	}
+	
+	function getGugunInfo(city){
+		$.ajax({
+			type:'GET',
+			url:'/option/gugun/'+city,
+			dataType:'json',
+			success: function(result){
+				// select box 초기화
+				$('#gugun').find('option').remove().end().append("<option disabled selected>시/구/군</option>")
+				
+				// List 개수만큼 option 추가
+				$.each(result,function(idx){
+					$('#gugun').append("<option value='"+result[idx]+"'>"+result[idx]+"</option>")
+				})
+			},
+			error : function(jqXHR, status, err){
+				alert('gugun 정보를 가져오는 중 오류 발생!')
+			}
+		})
+	}
+	
+	function getDongInfo(gugun){
+		let city = $('#city').val()
+		$.ajax({
+			type:'GET',
+			url:'/option/dong/'+city+'/'+gugun,
+			dataType:'json',
+			success: function(result){
+				// select box 초기화
+				$('#dong').find('option').remove().end().append("<option disabled selected>동</option>")
+				
+				// List 개수만큼 option 추가
+				$.each(result,function(idx){
+					$('#dong').append("<option value='"+result[idx]+"'>"+result[idx]+"</option>")
+				})
+			},
+			error : function(jqXHR, status, err){
+				alert('dong 정보를 가져오는 중 오류 발생!')
+			}
+		})
+	}
 </script>
 <body>
 <jsp:include page="include/header.jsp"/>
@@ -121,27 +186,18 @@
 		<div class="text-center" style="margin-top: 10px;">
             <form method="get" action="${root}/house/searchSelect">
                   <div class="form-group d-inline-block">
-                    <select class="form-control" id="sel1" name="key1">
-                      <option disabled selected value="all">시/도</option>
-                      <option>서울시</option>
-                      <option>경기도</option>
-                      <option>인천시</option>
+                    <select class="form-control" id="city" name="key1" onchange="getGugunInfo(this.value)">
+                      <option disabled selected value="">시/도</option>
                     </select>
                   </div>
                   <div class="form-group d-inline-block">
-                    <select class="form-control" id="sel2" name>
+                    <select class="form-control" id="gugun" onchange="getDongInfo(this.value)">
                       <option disabled selected>시/구/군</option>
-                      <option>종로구</option>
-                      <option>용산구</option>
-                      <option>마포구</option>
                     </select>
                   </div>
                   <div class="form-group d-inline-block">
-                    <select class="form-control" id="sel3">
+                    <select class="form-control" id="dong">
                       <option disabled selected>동</option>
-                      <option>청운동</option>
-                      <option>안국동</option>
-                      <option>돈의동</option>
                     </select>
                   </div>
                   
