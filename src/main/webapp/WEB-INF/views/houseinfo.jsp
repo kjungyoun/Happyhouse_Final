@@ -42,18 +42,137 @@
 	src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
 <script
 	src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
-
+<script type="text/javascript"
+	src="//dapi.kakao.com/v2/maps/sdk.js?appkey=91faec44501a2bd12af0827ba9208626&libraries=services,clusterer,drawing"></script>
 <!-- Template Main CSS File -->
 <link href="/assets/css/style.css" rel="stylesheet">
+
+<script type="text/javascript">
+	$(document).ready(function() {
+		if ('${msg}') {
+			alert('${msg}')
+			$('#loginModal').modal({
+				fadeDuration : 250
+			})
+		}
+		var container = document.getElementById('map');
+		var options = {
+			center : new kakao.maps.LatLng(33.450701, 126.570667),
+			level : 3
+		};
+
+		var map = new kakao.maps.Map(container, options);
+
+		// 웹 페이지 시작시 city 정보 select box에 담기
+		getCityInfo();
+	})
+</script>
+<script type="text/javascript">
+	function getCityInfo() {
+		$.ajax({
+			type : 'GET',
+			url : '/option/city',
+			dataType : 'json',
+			success : function(result) {
+				// select box 초기화
+				$('#city').find('option').remove().end().append(
+						"<option disabled selected value=''>시/도</option>")
+
+				// List 개수만큼 option 추가
+				$.each(result, function(idx) {
+					$('#city').append(
+							"<option value='"+result[idx]+"'>" + result[idx]
+									+ "</option>")
+				})
+			},
+			error : function(jqXHR, status, err) {
+				alert('city 정보를 가져오는 중 오류 발생!')
+			}
+		})
+	}
+
+	function getGugunInfo(city) {
+		$.ajax({
+			type : 'GET',
+			url : '/option/gugun/' + city,
+			dataType : 'json',
+			success : function(result) {
+				// select box 초기화
+				$('#gugun').find('option').remove().end().append(
+						"<option disabled selected>시/구/군</option>")
+
+				// List 개수만큼 option 추가
+				$.each(result, function(idx) {
+					$('#gugun').append(
+							"<option value='"+result[idx]+"'>" + result[idx]
+									+ "</option>")
+				})
+			},
+			error : function(jqXHR, status, err) {
+				alert('gugun 정보를 가져오는 중 오류 발생!')
+			}
+		})
+	}
+
+	function getDongInfo(gugun) {
+		let city = $('#city').val()
+		$.ajax({
+			type : 'GET',
+			url : '/option/dong/' + city + '/' + gugun,
+			dataType : 'json',
+			success : function(result) {
+				// select box 초기화
+				$('#dong').find('option').remove().end().append(
+						"<option disabled selected>동</option>")
+
+				// List 개수만큼 option 추가
+				$.each(result, function(idx) {
+					$('#dong').append(
+							"<option value='"+result[idx]+"'>" + result[idx]
+									+ "</option>")
+				})
+			},
+			error : function(jqXHR, status, err) {
+				alert('dong 정보를 가져오는 중 오류 발생!')
+			}
+		})
+	}
+</script>
 <script type="text/javascript">
 	$(function() {
 		//검색 버튼에 이벤트 연결
-		$('#submitBtn').click(function() {
-			pagelist(1);
-		})
-		<c:if test='${not empty param.key}'>
-		$('#key').val('${param.key}')
-		</c:if>
+		$('#submitBtn').click(
+				function() {
+					pagelist(1);
+					var mapContainer = document.getElementById('map'), // 지도를 표시할 div 
+					mapOption = {
+						center : new kakao.maps.LatLng(33.450701, 126.570667), // 지도의 중심좌표
+						level : 3
+					// 지도의 확대 레벨
+					};
+
+					// 지도를 생성합니다    
+					var map = new kakao.maps.Map(mapContainer, mapOption);
+
+					// 주소-좌표 변환 객체를 생성합니다
+					var geocoder = new kakao.maps.services.Geocoder();
+
+					// 주소로 좌표를 검색합니다
+					geocoder.addressSearch('${param.gugun} ${param.dong}', function(result,
+							status) {
+
+						// 정상적으로 검색이 완료됐으면 
+						if (status === kakao.maps.services.Status.OK) {
+
+							var coords = new kakao.maps.LatLng(result[0].y,
+									result[0].x);
+
+							// 지도의 중심을 결과값으로 받은 위치로 이동시킵니다
+							map.setCenter(coords);
+						}
+					});
+
+				})
 	})
 	function pagelist(cpage) {
 		//input 양식의 hidden으로 선언된 page에 요청된 페이지 정보 셋팅 
@@ -83,32 +202,26 @@
 				<div class="row">
 					<div class="col-lg-12 ml-auto" data-aos="fade-down">
 						<form id="form">
-						<input type='hidden' name='pageNo' id="pageNo"/>
+							<input type='hidden' name='pageNo' id="pageNo" />
 							<div class="form-group d-inline-block">
-								<select class="form-control" id="sel1">
+								<select class="form-control" id="city" 
+									onchange="getGugunInfo(this.value)">
 									<option disabled selected value="all">시/도</option>
-									<option>서울시</option>
-									<option>경기도</option>
-									<option>인천시</option>
 								</select>
 							</div>
 							<div class="form-group d-inline-block">
-								<select class="form-control" id="sel2" name="key">
+								<select class="form-control" id="gugun" name="gugun"
+									onchange="getDongInfo(this.value)">
 									<option disabled selected>시/구/군</option>
-									<option value="dong">종로구</option>
-									<option value="dong">용산구</option>
-									<option value="dong">마포구</option>
 								</select>
 							</div>
 							<div class="form-group d-inline-block">
-								<select class="form-control" id="sel3" name="word" value="${bean.word}">
+								<select class="form-control" id="dong" name="dong"
+									value="${bean.word}">
 									<option disabled selected>동</option>
-									<option>청운동</option>
-									<option>안국동</option>
-									<option>돈의동</option>
 								</select>
 							</div>
-							
+
 							<div class="form-group d-inline-block">
 								<button id="submitBtn" class="btn btn-primary mb-1">검색</button>
 							</div>
@@ -120,7 +233,7 @@
 						</form>
 
 
-									<%-- <form id="form">
+						<%-- <form id="form">
 						<input type='hidden' name='pageNo' id="pageNo"/>
 						<div class="form-group d-inline-block">
 						  <select class="form-control" id="key" name="key">
@@ -137,12 +250,17 @@
 						  <button  id="submitBtn" class="btn btn-primary mb-1">검색</button>
 						</div>
 					  </form>  --%>
-						<iframe
+						<div id="map"
+							style="width: 1200px; height: 450px; margin-left: auto; margin-right: auto"></div>
+
+						<!-- 						<iframe
 							src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3168.5607561223096!2d126.74783201543875!3d37.423855740043976!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x357b7b13aab9ed93%3A0x3abb0d0829c86fdb!2z7Iqk7YOA67KF7IqkIOyduOyynOyEnOywveygkA!5e0!3m2!1sko!2skr!4v1615476247568!5m2!1sko!2skr"
 							width="1200" height="450" style="border: 0" class="mb-3">
-						</iframe>
+						</iframe> -->
 					</div>
-					
+
+
+
 					<div class="col-lg-12 ml-auto" data-aos="fade-up">
 						<c:choose>
 							<c:when test="${empty list }">
@@ -157,7 +275,8 @@
 											<div class="media margin-clear">
 												<div class="media-body">
 													<h4>
-														<a href="${root}/house/search?key=AptName&word=${house.aptName}">${house.aptName}
+														<a
+															href="${root}/house/search?key=AptName&word=${house.aptName}">${house.aptName}
 															아파트</a>
 													</h4>
 													<h6 class="media-heading" id="">지역 정보 :
