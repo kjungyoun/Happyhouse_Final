@@ -55,18 +55,12 @@
 				fadeDuration : 250
 			})
 		}
-		var container = document.getElementById('map');
-		var options = {
-			center : new kakao.maps.LatLng(33.450701, 126.570667),
-			level : 3
-		};
-
-		var map = new kakao.maps.Map(container, options);
 
 		// 웹 페이지 시작시 city 정보 select box에 담기
 		getCityInfo();
 	})
 </script>
+
 <script type="text/javascript">
 	function getCityInfo() {
 		$.ajax({
@@ -138,6 +132,7 @@
 		})
 	}
 </script>
+<!-- 
 <script type="text/javascript">
 	$(function() {
 		//검색 버튼에 이벤트 연결
@@ -181,7 +176,9 @@
 		frm.attr('action', "${root}/house/search");
 		frm.submit();
 	}
-</script>
+</script> -->
+
+
 </head>
 
 <body>
@@ -204,7 +201,7 @@
 						<form id="form">
 							<input type='hidden' name='pageNo' id="pageNo" />
 							<div class="form-group d-inline-block">
-								<select class="form-control" id="city" 
+								<select class="form-control" id="city"
 									onchange="getGugunInfo(this.value)">
 									<option disabled selected value="all">시/도</option>
 								</select>
@@ -223,13 +220,14 @@
 							</div>
 
 							<div class="form-group d-inline-block">
-								<button id="submitBtn" class="btn btn-primary mb-1">검색</button>
+								<button type="button" class="btn btn-primary mb-1"
+									onclick="mvLocation()">검색</button>
 							</div>
-							&nbsp
-							<button type="button" class="btn btn-info">상권 정보</button>
-							&nbsp
+							<button type="button" class="btn btn-info" onclick="commercial()">상권
+								정보</button>
 							<button type="button" class="btn btn-success" data-toggle="modal"
 								data-target="#envModal">환경 정보</button>
+
 						</form>
 
 
@@ -384,6 +382,11 @@
 			</div>
 		</div>
 	</div>
+	<!-- Template Main JS File -->
+	<script src="/assets/js/main.js"></script>
+	<script src="/assets/js/user.js"></script>
+	<script src="/assets/js/map.js"></script>
+	<script src="/assets/js/selectbox.js"></script>
 </body>
 
 </html>
