@@ -6,6 +6,7 @@
 <html lang="en">
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 <script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey=91faec44501a2bd12af0827ba9208626&libraries=services,clusterer,drawing"></script>
+<script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey=91faec44501a2bd12af0827ba9208626&libraries=services,clusterer,drawing"></script>
 <script type="text/javascript">
 	$(document).ready(function(){
 		if('${msg}'){
@@ -13,81 +14,12 @@
 			$('#loginModal').modal({
 				fadeDuration: 250
 			})
-		}
-			var container = document.getElementById('map');
-		var options = {
-			center: new kakao.maps.LatLng(33.450701, 126.570667),
-			level: 3
-		};
-
-		var map = new kakao.maps.Map(container, options);
-		
+		}	
 		// 웹 페이지 시작시 city 정보 select box에 담기
 		getCityInfo();
 		})
 </script>
-<script type="text/javascript">
-	function getCityInfo(){
-		$.ajax({
-			type:'GET',
-			url:'/option/city',
-			dataType:'json',
-			success: function(result){
-				// select box 초기화
-				$('#city').find('option').remove().end().append("<option disabled selected value=''>시/도</option>")
-				
-				// List 개수만큼 option 추가
-				$.each(result,function(idx){
-					$('#city').append("<option value='"+result[idx]+"'>"+result[idx]+"</option>")
-				})
-			},
-			error : function(jqXHR, status, err){
-				alert('city 정보를 가져오는 중 오류 발생!')
-			}
-		})
-	}
-	
-	function getGugunInfo(city){
-		$.ajax({
-			type:'GET',
-			url:'/option/gugun/'+city,
-			dataType:'json',
-			success: function(result){
-				// select box 초기화
-				$('#gugun').find('option').remove().end().append("<option disabled selected>시/구/군</option>")
-				
-				// List 개수만큼 option 추가
-				$.each(result,function(idx){
-					$('#gugun').append("<option value='"+result[idx]+"'>"+result[idx]+"</option>")
-				})
-			},
-			error : function(jqXHR, status, err){
-				alert('gugun 정보를 가져오는 중 오류 발생!')
-			}
-		})
-	}
-	
-	function getDongInfo(gugun){
-		let city = $('#city').val()
-		$.ajax({
-			type:'GET',
-			url:'/option/dong/'+city+'/'+gugun,
-			dataType:'json',
-			success: function(result){
-				// select box 초기화
-				$('#dong').find('option').remove().end().append("<option disabled selected>동</option>")
-				
-				// List 개수만큼 option 추가
-				$.each(result,function(idx){
-					$('#dong').append("<option value='"+result[idx]+"'>"+result[idx]+"</option>")
-				})
-			},
-			error : function(jqXHR, status, err){
-				alert('dong 정보를 가져오는 중 오류 발생!')
-			}
-		})
-	}
-</script>
+
 <body>
 <jsp:include page="include/header.jsp"/>
   <!-- ======= Hero Section ======= -->
@@ -184,25 +116,25 @@
     <div class="card-header bg-dark"><h2 class="text-center text-light card-title">아파트/주택 실거래가 검색</h2></div>
     <div class="card-body">
 		<div class="text-center" style="margin-top: 10px;">
-            <form method="get" action="${root}/house/searchSelect">
+            <form>
                   <div class="form-group d-inline-block">
-                    <select class="form-control" id="city" name="key1" onchange="getGugunInfo(this.value)">
+                    <select class="form-control" id="city" name="city" onchange="getGugunInfo(this.value)">
                       <option disabled selected value="">시/도</option>
                     </select>
                   </div>
                   <div class="form-group d-inline-block">
-                    <select class="form-control" id="gugun" onchange="getDongInfo(this.value)">
+                    <select class="form-control" id="gugun" name='gugun' onchange="getDongInfo(this.value)">
                       <option disabled selected>시/구/군</option>
                     </select>
                   </div>
                   <div class="form-group d-inline-block">
-                    <select class="form-control" id="dong">
+                    <select class="form-control" id="dong" name='dong'>
                       <option disabled selected>동</option>
                     </select>
                   </div>
                   
                   <div class="form-group d-inline-block">
-                    <button type="submit" class="btn btn-primary mb-1">검색</button>
+                    <button type="button" class="btn btn-primary mb-1" onclick="mvLocation()">검색</button>
                   </div>
                 </form>
             </div>
@@ -294,6 +226,8 @@
   <!-- Template Main JS File -->
   <script src="/assets/js/main.js"></script>
   <script src="/assets/js/user.js"></script>
+  <script src="/assets/js/map.js"></script>
+<script   src="/assets/js/selectbox.js"></script>
 
 </body>
 

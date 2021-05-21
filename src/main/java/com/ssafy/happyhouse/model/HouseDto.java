@@ -14,8 +14,22 @@ public class HouseDto {
 	private int floor;
 	private String jibun;
 	private BaseAddr base;
+	private Double lat;
+	private Double lng;
 	
 	
+	public Double getLat() {
+		return lat;
+	}
+	public void setLat(Double lat) {
+		this.lat = lat;
+	}
+	public Double getLng() {
+		return lng;
+	}
+	public void setLng(Double lng) {
+		this.lng = lng;
+	}
 	public BaseAddr getBase() {
 		return base;
 	}
@@ -95,9 +109,8 @@ public class HouseDto {
 		this.jibun = jibun;
 	}
 	
-	
 	public HouseDto(int no, String dong, String aptName, int code, String dealAmount, int buildYear, int dealYear,
-			int dealMonth, int dealDay, Double area, int floor, String jibun, BaseAddr base) {
+			int dealMonth, int dealDay, Double area, int floor, String jibun, BaseAddr base, Double lat, Double lng) {
 		super();
 		this.no = no;
 		this.dong = dong;
@@ -112,7 +125,8 @@ public class HouseDto {
 		this.floor = floor;
 		this.jibun = jibun;
 		this.base = base;
+		this.lat = lat;
+		this.lng = lng;
 	}
-	
 	public HouseDto() {};
 }
