@@ -128,5 +128,14 @@ public class HouseDto {
 		this.lat = lat;
 		this.lng = lng;
 	}
-	public HouseDto() {};
+	public HouseDto() {}
+	@Override
+	public String toString() {
+		return "HouseDto [no=" + no + ", dong=" + dong + ", aptName=" + aptName + ", code=" + code + ", dealAmount="
+				+ dealAmount + ", buildYear=" + buildYear + ", dealYear=" + dealYear + ", dealMonth=" + dealMonth
+				+ ", dealDay=" + dealDay + ", area=" + area + ", floor=" + floor + ", jibun=" + jibun + ", base=" + base
+				+ ", lat=" + lat + ", lng=" + lng + "]";
+	};
+	
+	
 }

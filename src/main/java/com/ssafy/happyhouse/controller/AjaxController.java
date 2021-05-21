@@ -60,8 +60,8 @@ public class AjaxController {
 		return new ResponseEntity(res, HttpStatus.OK);
 	}
 	
-	@GetMapping("aptPosition/{city}/{gugun}")
-	public ResponseEntity<List<HouseDto>> getAptPosition(String city, String gugun, String dong) throws Exception{
+	@GetMapping("aptPosition/{city}/{gugun}/{dong}")
+	public ResponseEntity<List<HouseDto>> getAptPosition(@PathVariable String city, @PathVariable String gugun, @PathVariable String dong) throws Exception{
 		BaseAddr addr = new BaseAddr();
 		addr.setCity(city);
 		addr.setGugun(gugun);
