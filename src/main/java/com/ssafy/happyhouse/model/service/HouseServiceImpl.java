@@ -19,10 +19,19 @@ public class HouseServiceImpl implements HouseService {
 	@Override
 	public List<HouseDto> searchHouse(PageBean bean) {
 			int total;
-			total = houseMapper.totalCount(bean);
+			total = houseMapper.totalDetailCount(bean);
 			PageUtility util = new PageUtility(bean.getInterval(), total, bean.getPageNo());
 			bean.setPageLink(util.getPageBar());
-			return houseMapper.searchHouse(bean);
+			return houseMapper.searchDetail(bean);
+	}
+
+	@Override
+	public List<HouseDto> searchDetail(PageBean bean) {
+		int total;
+		total = houseMapper.totalDetailCount(bean);
+		PageUtility util = new PageUtility(bean.getInterval(),total, bean.getPageNo());
+		bean.setPageLink(util.getPageBar());
+		return houseMapper.searchDetail(bean);
 	}
 
 }

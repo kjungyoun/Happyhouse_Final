@@ -15,8 +15,6 @@
 				fadeDuration: 250
 			})
 		}	
-		// 웹 페이지 시작시 city 정보 select box에 담기
-		getCityInfo();
 		})
 </script>
 

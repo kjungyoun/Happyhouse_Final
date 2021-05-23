@@ -8,4 +8,6 @@ import com.ssafy.happyhouse.model.PageBean;
 
 public interface HouseService {
 	List<HouseDto> searchHouse(PageBean bean);
+	
+	List<HouseDto> searchDetail(PageBean bean);
 }

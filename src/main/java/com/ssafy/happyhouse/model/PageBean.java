@@ -11,6 +11,30 @@ public class PageBean {
 	/** 한 페이지에 보여주 content 개수 */
 	private int interval = 2;
 	
+	private int code;
+	private String dong;
+	public int getCode() {
+		return code;
+	}
+	public void setCode(int code) {
+		this.code = code;
+	}
+	
+	
+	public String getDong() {
+		return dong;
+	}
+	public void setDong(String dong) {
+		this.dong = dong;
+	}
+	public String getAptName() {
+		return aptName;
+	}
+	public void setAptName(String aptName) {
+		this.aptName = aptName;
+	}
+	private String aptName;
+	
 	private int startNo=0;
 	private String pageLink;
 	public PageBean() {	}

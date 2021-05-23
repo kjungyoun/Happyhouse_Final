@@ -30,7 +30,7 @@
 	</resultMap>
 	
 	<!-- 검색어로 집 거래 정보 리스트 구하기 -->
-	<select id="searchHouse" parameterType="pageBean" resultMap="dealMap">
+	<!-- <select id="searchHouse" parameterType="pageBean" resultMap="dealMap">
 		select * from housedeal a
 		left join (select distinct city, dongcode, gugun from baseaddress) b
 		on a.code = b.dongcode
@@ -40,16 +40,47 @@
 			</if>
 		</where>
 		order by AptName desc limit #{startNo}, #{interval}
-	</select>
+	</select> -->
 	
 	<!-- 총 데이터 개수 구하기 -->
-	<select id="totalCount" parameterType="pageBean" resultType="int">
+	<!-- <select id="totalCount" parameterType="pageBean" resultType="int">
 		select count(*) as cnt from housedeal
 		<where>
 			<if test="key != 'all' and key != null and word != null and word != ''">
 				${key} like concat('%',#{word},'%')
 			</if>
 		</where>
+	</select> -->
+	
+	<!-- 총 데이터 개수 구하기 -->
+	<select id="totalDetailCount" parameterType="pageBean" resultType="int">
+		select count(*) as cnt from housedeal
+		<where>
+			<if test="code != 0 and dong != null and aptName != null">
+				code = #{code}
+				and
+				dong = #{dong}
+				and
+				aptName = #{aptName}
+			</if>
+		</where>
+	</select>
+	
+	<!-- 검색어로 집 거래 정보 리스트 구하기 -->
+	<select id="searchDetail" parameterType="pageBean" resultMap="dealMap">
+		select * from housedeal a
+		left join (select distinct city, dongcode, gugun from baseaddress) b
+		on a.code = b.dongcode
+		<where>
+			<if test="code != 0 and dong != null and aptName != null">
+				code = #{code}
+				and
+				dong = #{dong}
+				and
+				aptName = #{aptName}
+			</if>
+		</where>
+		order by AptName desc limit #{startNo}, #{interval}
 	</select>
 	
 	<!-- BaseAddress의 전체 목록을 구하기 위한  -->

@@ -47,91 +47,7 @@
 <!-- Template Main CSS File -->
 <link href="/assets/css/style.css" rel="stylesheet">
 
-<script type="text/javascript">
-	$(document).ready(function() {
-		if ('${msg}') {
-			alert('${msg}')
-			$('#loginModal').modal({
-				fadeDuration : 250
-			})
-		}
 
-		// 웹 페이지 시작시 city 정보 select box에 담기
-		getCityInfo();
-	})
-</script>
-
-<script type="text/javascript">
-	function getCityInfo() {
-		$.ajax({
-			type : 'GET',
-			url : '/option/city',
-			dataType : 'json',
-			success : function(result) {
-				// select box 초기화
-				$('#city').find('option').remove().end().append(
-						"<option disabled selected value=''>시/도</option>")
-
-				// List 개수만큼 option 추가
-				$.each(result, function(idx) {
-					$('#city').append(
-							"<option value='"+result[idx]+"'>" + result[idx]
-									+ "</option>")
-				})
-			},
-			error : function(jqXHR, status, err) {
-				alert('city 정보를 가져오는 중 오류 발생!')
-			}
-		})
-	}
-
-	function getGugunInfo(city) {
-		$.ajax({
-			type : 'GET',
-			url : '/option/gugun/' + city,
-			dataType : 'json',
-			success : function(result) {
-				// select box 초기화
-				$('#gugun').find('option').remove().end().append(
-						"<option disabled selected>시/구/군</option>")
-
-				// List 개수만큼 option 추가
-				$.each(result, function(idx) {
-					$('#gugun').append(
-							"<option value='"+result[idx]+"'>" + result[idx]
-									+ "</option>")
-				})
-			},
-			error : function(jqXHR, status, err) {
-				alert('gugun 정보를 가져오는 중 오류 발생!')
-			}
-		})
-	}
-
-	function getDongInfo(gugun) {
-		let city = $('#city').val()
-		$.ajax({
-			type : 'GET',
-			url : '/option/dong/' + city + '/' + gugun,
-			dataType : 'json',
-			success : function(result) {
-				// select box 초기화
-				$('#dong').find('option').remove().end().append(
-						"<option disabled selected>동</option>")
-
-				// List 개수만큼 option 추가
-				$.each(result, function(idx) {
-					$('#dong').append(
-							"<option value='"+result[idx]+"'>" + result[idx]
-									+ "</option>")
-				})
-			},
-			error : function(jqXHR, status, err) {
-				alert('dong 정보를 가져오는 중 오류 발생!')
-			}
-		})
-	}
-</script>
 <!-- 
 <script type="text/javascript">
 	$(function() {
@@ -169,15 +85,17 @@
 
 				})
 	})
-	function pagelist(cpage) {
-		//input 양식의 hidden으로 선언된 page에 요청된 페이지 정보 셋팅 
-		$("#pageNo").val(cpage);
-		var frm = $("#form");
-		frm.attr('action', "${root}/house/search");
-		frm.submit();
-	}
 </script> -->
 
+<script type="text/javascript">
+function pagelist(cpage) {
+	//input 양식의 hidden으로 선언된 page에 요청된 페이지 정보 셋팅 
+	$("#pageNo").val(cpage);
+	var frm = $("#form");
+	frm.attr('action', "${root}/house/search");
+	frm.submit();
+}
+</script>
 
 </head>
 
@@ -200,6 +118,9 @@
 					<div class="col-lg-12 ml-auto" data-aos="fade-down">
 						<form id="form">
 							<input type='hidden' name='pageNo' id="pageNo" />
+							<input type='hidden' name='dong'  value="${list[0].dong }"/>
+							<input type='hidden' name='code' id="code" value="${list[0].code }" />
+							<input type='hidden' name='aptName' id="aptName" value="${list[0].aptName }" />
 							<div class="form-group d-inline-block">
 								<select class="form-control" id="city"
 									onchange="getGugunInfo(this.value)">
@@ -264,13 +185,13 @@
 							<c:when test="${empty list }">
 								<h3 class="text-danger">조회할 상품 정보가 없습니다.</h3>
 							</c:when>
-							<c:when test="${bean.key eq 'dong'}">
-								<ul class="nav nav-tabs flex-column">
+							<c:when test="${not empty list}">
+								<ul class="nav nav-tabs flex-column mt-3">
 									<div>
-										<h3 class="title">거래 정보</h3>
+										<h1 class="title">거래 정보</h1>
 										<div class="separator-2"></div>
 										<c:forEach var="house" items="${list}">
-											<div class="media margin-clear">
+											<div class="media margin-clear mt-3">
 												<div class="media-body">
 													<h4>
 														<a

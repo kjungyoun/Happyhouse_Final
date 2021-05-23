@@ -46,7 +46,7 @@ const map = new kakao.maps.Map(container, options);
 				                        <div class="desc">
 				                            <div class="ellipsis">${item.addr.city} ${item.addr.gugun} ${item.addr.dong}</div>
 				                            <div class="jibun ellipsis">(우) ${item.code} (지번) ${item.dong} ${item.jibun}</div>
-				                            <div><a href="/house/search" target="_blank" class="link">상세 결과보기</a></div>
+				                            <div><a href="/house/search/${item.code}/${item.dong}/${item.aptName}" target="_self" class="link">상세 결과보기</a></div>
 				                        </div>
 				                    </div>
 				                </div>   

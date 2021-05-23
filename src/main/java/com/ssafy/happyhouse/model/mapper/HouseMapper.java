@@ -11,8 +11,10 @@ import com.ssafy.happyhouse.model.PageBean;
 @Mapper
 public interface HouseMapper {
 	
-	List<HouseDto> searchHouse(PageBean bean);
-	int totalCount (PageBean bean);
+//	List<HouseDto> searchHouse(PageBean bean);
+//	int totalCount (PageBean bean);
+	int totalDetailCount (PageBean bean);
+	List<HouseDto> searchDetail(PageBean bean);
 	
 	
 }
