@@ -9,6 +9,6 @@ public interface MapService {
 	
 	BaseAddr getDongPosition(BaseAddr addr)throws Exception;
 	
-	List<HouseDto> getAptPosition(BaseAddr addr)throws Exception;
+	List<HouseDto> getAptPosition()throws Exception;
 	
 }

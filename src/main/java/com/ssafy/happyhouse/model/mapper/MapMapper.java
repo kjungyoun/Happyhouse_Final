@@ -12,5 +12,5 @@ public interface MapMapper {
 	
 	BaseAddr getDongPosition(BaseAddr addr);
 	
-	List<HouseDto> getAptPosition(BaseAddr addr);
+	List<HouseDto> getAptPosition();
 }

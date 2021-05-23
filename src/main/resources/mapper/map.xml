@@ -15,15 +15,31 @@
 		</where>
 	</select>
 	
-	<select id="getAptPosition" parameterType="baseAddr" resultType="houseDto">
-		SELECT dong, aptName, code, buildYear, jibun, lat,lng FROM houseinfo
-			where code = (
-			select distinct dongcode
-			from baseaddress
-			where city = #{city}
-			and gugun = #{gugun}
-			)
-			and dong = #{dong};
+	<resultMap type="baseAddr" id="addrMap">
+		<result property="city" column="city"/>
+		<result property="gugun" column="gugun"/>
+		<result property="dongcode" column="dongcode"/>
+		<result property="dong" column="dong"/>	
+	</resultMap>
+	
+	<resultMap type="houseDto" id="houseMap">
+		<result property="aptName" column="aptName"/>
+		<result property="code" column="code"/>
+		<result property="dong" column="dong"/>
+		<result property="buildYear" column="buildYear"/>
+		<result property="jibun" column="jibun"/>
+		<result property="lat" column="lat"/>
+		<result property="lng" column="lng"/>	
+		<collection property="addr" ofType="baseAddr" resultMap="addrMap"></collection>
+	</resultMap>
+	
+	<select id="getAptPosition" resultMap="houseMap">
+		SELECT b.city, b.gugun, a.dong, aptName, a.code, buildYear, jibun, a.lat, a.lng 
+		FROM houseinfo a
+		left join (select city, gugun, dong, dongcode
+		from baseaddress) b
+		on a.code = b.dongcode
+		and a.dong = b.dong
 	</select>
 	
 </mapper>

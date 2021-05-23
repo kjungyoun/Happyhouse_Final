@@ -148,6 +148,7 @@
 		<div class="text-center">
                 <button type="button" class="btn btn-success" onclick="location.href='/pollutionInfo'">환경정보 보러가기</button>
               <button type="button" class="btn btn-warning ml-2" onclick="location.href='/shopInfo'">주변상권 보러가기</button>
+              <button type="button" class="btn btn-primary ml-2" onclick="location.href='/house/search'">상세정보 보러가기</button>
            </div>   
 	</div>
   </div>     

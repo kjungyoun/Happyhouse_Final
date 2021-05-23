@@ -21,8 +21,8 @@ public class MapServiceImpl implements MapService {
 	}
 
 	@Override
-	public List<HouseDto> getAptPosition(BaseAddr addr)throws Exception {
-		return map.getAptPosition(addr);
+	public List<HouseDto> getAptPosition()throws Exception {
+		return map.getAptPosition();
 	}
 
 }

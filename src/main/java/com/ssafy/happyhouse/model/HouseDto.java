@@ -16,8 +16,45 @@ public class HouseDto {
 	private BaseAddr base;
 	private Double lat;
 	private Double lng;
+	private BaseAddr addr;
 	
 	
+	
+	
+	public HouseDto(int no, String dong, String aptName, int code, String dealAmount, int buildYear, int dealYear,
+			int dealMonth, int dealDay, Double area, int floor, String jibun, BaseAddr base, Double lat, Double lng,
+			BaseAddr addr) {
+		super();
+		this.no = no;
+		this.dong = dong;
+		this.aptName = aptName;
+		this.code = code;
+		this.dealAmount = dealAmount;
+		this.buildYear = buildYear;
+		this.dealYear = dealYear;
+		this.dealMonth = dealMonth;
+		this.dealDay = dealDay;
+		this.area = area;
+		this.floor = floor;
+		this.jibun = jibun;
+		this.base = base;
+		this.lat = lat;
+		this.lng = lng;
+		this.addr = addr;
+	}
+	@Override
+	public String toString() {
+		return "HouseDto [no=" + no + ", dong=" + dong + ", aptName=" + aptName + ", code=" + code + ", dealAmount="
+				+ dealAmount + ", buildYear=" + buildYear + ", dealYear=" + dealYear + ", dealMonth=" + dealMonth
+				+ ", dealDay=" + dealDay + ", area=" + area + ", floor=" + floor + ", jibun=" + jibun + ", base=" + base
+				+ ", lat=" + lat + ", lng=" + lng + ", addr=" + addr + "]";
+	}
+	public BaseAddr getAddr() {
+		return addr;
+	}
+	public void setAddr(BaseAddr addr) {
+		this.addr = addr;
+	}
 	public Double getLat() {
 		return lat;
 	}
@@ -109,33 +146,9 @@ public class HouseDto {
 		this.jibun = jibun;
 	}
 	
-	public HouseDto(int no, String dong, String aptName, int code, String dealAmount, int buildYear, int dealYear,
-			int dealMonth, int dealDay, Double area, int floor, String jibun, BaseAddr base, Double lat, Double lng) {
-		super();
-		this.no = no;
-		this.dong = dong;
-		this.aptName = aptName;
-		this.code = code;
-		this.dealAmount = dealAmount;
-		this.buildYear = buildYear;
-		this.dealYear = dealYear;
-		this.dealMonth = dealMonth;
-		this.dealDay = dealDay;
-		this.area = area;
-		this.floor = floor;
-		this.jibun = jibun;
-		this.base = base;
-		this.lat = lat;
-		this.lng = lng;
-	}
+	
 	public HouseDto() {}
-	@Override
-	public String toString() {
-		return "HouseDto [no=" + no + ", dong=" + dong + ", aptName=" + aptName + ", code=" + code + ", dealAmount="
-				+ dealAmount + ", buildYear=" + buildYear + ", dealYear=" + dealYear + ", dealMonth=" + dealMonth
-				+ ", dealDay=" + dealDay + ", area=" + area + ", floor=" + floor + ", jibun=" + jibun + ", base=" + base
-				+ ", lat=" + lat + ", lng=" + lng + "]";
-	};
+	
 	
 	
 }
