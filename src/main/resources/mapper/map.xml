@@ -30,7 +30,7 @@
 		<result property="jibun" column="jibun"/>
 		<result property="lat" column="lat"/>
 		<result property="lng" column="lng"/>	
-		<collection property="addr" ofType="baseAddr" resultMap="addrMap"></collection>
+		<collection property="base" ofType="baseAddr" resultMap="addrMap"></collection>
 	</resultMap>
 	
 	<select id="getAptPosition" resultMap="houseMap">

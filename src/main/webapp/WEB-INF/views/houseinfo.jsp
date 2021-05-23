@@ -46,6 +46,12 @@
 	src="//dapi.kakao.com/v2/maps/sdk.js?appkey=91faec44501a2bd12af0827ba9208626&libraries=services,clusterer,drawing"></script>
 <!-- Template Main CSS File -->
 <link href="/assets/css/style.css" rel="stylesheet">
+<script type="text/javascript">
+$(document).ready(function(){
+	var moveLatLon = new kakao.maps.LatLng(${position.lat}, ${position.lng});
+	map.setCenter(moveLatLon)
+})
+</script>
 
 
 <!-- 
@@ -117,14 +123,17 @@ function pagelist(cpage) {
 				<div class="row">
 					<div class="col-lg-12 ml-auto" data-aos="fade-down">
 						<form id="form">
-							<input type='hidden' name='pageNo' id="pageNo" />
-							<input type='hidden' name='dong'  value="${list[0].dong }"/>
-							<input type='hidden' name='code' id="code" value="${list[0].code }" />
-							<input type='hidden' name='aptName' id="aptName" value="${list[0].aptName }" />
+							<input type='hidden' name='pageNo' id="pageNo" /> <input
+								type='hidden' name='dong' value="${list[0].dong }" /> <input
+								type='hidden' name='code' id="code" value="${list[0].code }" />
+							<input type='hidden' name='aptName' id="aptName"
+								value="${list[0].aptName }" /> <input type='hidden' name='lat'
+								id="lat" value="${position.lat }" /> <input type='hidden'
+								name='lng' id="lng" value="${position.lng }" />
 							<div class="form-group d-inline-block">
 								<select class="form-control" id="city"
 									onchange="getGugunInfo(this.value)">
-									<option disabled selected value="all">시/도</option>
+									<option disabled selected>시/도</option>
 								</select>
 							</div>
 							<div class="form-group d-inline-block">
@@ -136,6 +145,7 @@ function pagelist(cpage) {
 							<div class="form-group d-inline-block">
 								<select class="form-control" id="dong" name="dong"
 									value="${bean.word}">
+
 									<option disabled selected>동</option>
 								</select>
 							</div>
@@ -150,54 +160,43 @@ function pagelist(cpage) {
 								data-target="#envModal">환경 정보</button>
 
 						</form>
-
-
-						<%-- <form id="form">
-						<input type='hidden' name='pageNo' id="pageNo"/>
-						<div class="form-group d-inline-block">
-						  <select class="form-control" id="key" name="key">
-							<option value="all">전체 검색</option>
-							<option value="dong">동으로 검색</option>
-							<option value="AptName">아파트로 검색</option>
-						  </select>
-						</div>
-						<div class="form-group d-inline-block">
-						   <input type="text" class="form-control" name="word" value="${bean.word}">
-						</div>
-				
-						<div class="form-group d-inline-block">
-						  <button  id="submitBtn" class="btn btn-primary mb-1">검색</button>
-						</div>
-					  </form>  --%>
+						<div class="map_wrap">
 						<div id="map"
-							style="width: 1200px; height: 450px; margin-left: auto; margin-right: auto"></div>
+							style="width: 1200px; height: 450px; margin-left: auto; margin-right: auto; "></div>
 
-						<!-- 						<iframe
-							src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3168.5607561223096!2d126.74783201543875!3d37.423855740043976!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x357b7b13aab9ed93%3A0x3abb0d0829c86fdb!2z7Iqk7YOA67KF7IqkIOyduOyynOyEnOywveygkA!5e0!3m2!1sko!2skr!4v1615476247568!5m2!1sko!2skr"
-							width="1200" height="450" style="border: 0" class="mb-3">
-						</iframe> -->
+						<ul id="category" style="display:none">
+							<li id="BK9" data-order="0"><span class="category_bg bank"></span>
+								은행</li>
+							<li id="MT1" data-order="1"><span class="category_bg mart"></span>
+								마트</li>
+							<li id="PM9" data-order="2"><span
+								class="category_bg pharmacy"></span> 약국</li>
+							<li id="OL7" data-order="3"><span class="category_bg oil"></span>
+								주유소</li>
+							<li id="CE7" data-order="4"><span class="category_bg cafe"></span>
+								카페</li>
+							<li id="CS2" data-order="5"><span class="category_bg store"></span>
+								편의점</li>
+						</ul>
+					</div>
 					</div>
 
 
 
-					<div class="col-lg-12 ml-auto" data-aos="fade-up">
+					<div class="col-lg-12 ml-auto mt-5" data-aos="fade-up" style="margin-left: auto; margin-right: auto;">
 						<c:choose>
 							<c:when test="${empty list }">
 								<h3 class="text-danger">조회할 상품 정보가 없습니다.</h3>
 							</c:when>
 							<c:when test="${not empty list}">
-								<ul class="nav nav-tabs flex-column mt-3">
+								<ul class="nav nav-tabs flex-column mt-5">
 									<div>
-										<h1 class="title">거래 정보</h1>
+										<h1 class="title mt-5">거래 정보</h1>
 										<div class="separator-2"></div>
 										<c:forEach var="house" items="${list}">
 											<div class="media margin-clear mt-3">
-												<div class="media-body">
-													<h4>
-														<a
-															href="${root}/house/search?key=AptName&word=${house.aptName}">${house.aptName}
-															아파트</a>
-													</h4>
+												<div class="media-body" id='houseInfo'>
+													<h4 class="text-success">${house.aptName}아파트</h4>
 													<h6 class="media-heading" id="">지역 정보 :
 														${house.base.city} ${house.base.gugun} ${house.dong}</h6>
 													<h6 class="media-heading" id="">아파트 지번 :
@@ -219,7 +218,7 @@ function pagelist(cpage) {
 											<hr>
 										</c:forEach>
 									</div>
-									<div>${bean.pageLink}</div>
+									<div style="margin-left: auto; margin-right: auto;">${bean.pageLink}</div>
 								</ul>
 							</c:when>
 							<%-- <c:otherwise>

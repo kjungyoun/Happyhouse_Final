@@ -1,7 +1,7 @@
 $(document).ready(function(){
 		// 웹 페이지 시작시 city 정보 select box에 담기
-		getCityInfo();
-		})
+			getCityInfo();			
+	})
 		
 function getCityInfo(){
 		$.ajax({
@@ -30,12 +30,13 @@ function getCityInfo(){
 			dataType:'json',
 			success: function(result){
 				// select box 초기화
-				$('#gugun').find('option').remove().end().append("<option disabled selected>시/구/군</option>")
 				
-				// List 개수만큼 option 추가
+				$('#gugun').find('option').remove().end().append("<option disabled >시/구/군</option>")
 				$.each(result,function(idx){
 					$('#gugun').append("<option value='"+result[idx]+"'>"+result[idx]+"</option>")
 				})
+				// List 개수만큼 option 추가
+				
 			},
 			error : function(jqXHR, status, err){
 				alert('gugun 정보를 가져오는 중 오류 발생!')
@@ -43,6 +44,7 @@ function getCityInfo(){
 		})
 	}
 	
+
 	function getDongInfo(gugun){
 		let city = $('#city').val()
 		$.ajax({
