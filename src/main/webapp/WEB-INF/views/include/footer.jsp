@@ -44,11 +44,12 @@
           <article class="card-body mx-auto" style="max-width: 400px;">
             <h4 class="card-title text-center mt-3">Create Account</h4>
             <form id="signupform" action="" method="post">
+                <div class="check_font" id="validId"></div>
               <div class="form-group input-group">
                 <div class="input-group-prepend">
                     <span class="input-group-text"> <i class="fa fa-user"></i> </span>
                 </div>
-                <input id = "userid" name="userid" class="form-control" placeholder="ID" type="text">
+                <input id = "userid" name="userid" class="form-control" onchange="checkId()" idCheck='' placeholder="ID" type="text"/>
               </div> <!-- form-group// -->
               <div class="form-group input-group">
                 <div class="input-group-prepend">
@@ -75,7 +76,7 @@
                 <input id = "email" name="email" class="form-control" placeholder="Email address" type="email">
               </div> <!-- form-group// --> 
               <div class="form-group">
-                <button type="button" onclick="javascript:signup();" class="btn btn-primary btn-block" data-dismiss="modal"> 가입하기 </button>
+                <button type="button" onclick="javascript:signup();" class="btn btn-primary btn-block"> 가입하기 </button>
               </div> <!-- form-group// -->      
               <p class="text-center">Have an account? <a data-dismiss="modal" data-toggle="modal" href="#loginModal">Log In</a> </p>                                                                 
             </form>

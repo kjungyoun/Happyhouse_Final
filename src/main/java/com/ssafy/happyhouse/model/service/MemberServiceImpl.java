@@ -61,4 +61,11 @@ public class MemberServiceImpl implements MemberService {
 			return memberMapper.searchAll(bean);
 	}
 
+	@Override
+	public int validId(String userid) throws Exception {
+		String res = memberMapper.validId(userid);
+		if(res == null) return 0;
+		else return 1;
+	}
+
 }

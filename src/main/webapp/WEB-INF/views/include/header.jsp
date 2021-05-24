@@ -26,43 +26,6 @@
 
   <!-- Template Main CSS File -->
   <link href="/assets/css/style.css" rel="stylesheet">
-
-<script type="text/javascript">
-	function login() {
-		if(document.getElementById("useridL").value == "") {
-			alert("아이디 입력!!!");
-			return;
-		} else if(document.getElementById("userpwdL").value == "") {
-			alert("비밀번호 입력!!!");
-			return;
-		} else {
-			document.getElementById("loginform").action = "${root}/user/login";
-			document.getElementById("loginform").submit();
-		}
-	}
-	function signup(){
-		if($("#username").val() == "") {
-			alert("이름 입력!!!");
-			return;
-		} else if($("#userid").val() == "") {
-			alert("아이디 입력!!!");
-			return;
-		} else if($("#userpwd").val() == "") {
-			alert("비밀번호 입력!!!");
-			return;
-		} else if($("#userpwd").val() != $("#pwdcheck").val()) {
-			alert("비밀번호 확인!!!");
-			return;
-		}else if($("#email").val() == "") {
-			alert("이메일 입력!!!");
-			return;
-		} else {
-			document.getElementById("signupform").action = "${root}/user/register";
-			document.getElementById("signupform").submit();
-		}
-	}
-	
-	</script>
 </head>
   <!-- ======= Header ======= -->
   <header id="header" class="fixed-top">
