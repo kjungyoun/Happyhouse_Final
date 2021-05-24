@@ -52,4 +52,11 @@
 		</where>
 	</select>
 	
+	<select id="validId" parameterType="string" resultType="string">
+		select userid from member
+		<where>
+			userid = #{userid}
+		</where>
+	</select>
+	
 </mapper>

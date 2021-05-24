@@ -30,5 +30,7 @@ public interface MemberMapper {
 	List<MemberDto> searchAll(PageBean bean);
 	
 	int totalCount(PageBean bean);
+	
+	String validId(String userid);
 
 }
