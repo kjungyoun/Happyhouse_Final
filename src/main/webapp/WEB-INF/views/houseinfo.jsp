@@ -136,44 +136,6 @@ function getDongInfo(gugun){
 }
 </script>
 
-<!-- 
-<script type="text/javascript">
-	$(function() {
-		//검색 버튼에 이벤트 연결
-		$('#submitBtn').click(
-				function() {
-					pagelist(1);
-					var mapContainer = document.getElementById('map'), // 지도를 표시할 div 
-					mapOption = {
-						center : new kakao.maps.LatLng(33.450701, 126.570667), // 지도의 중심좌표
-						level : 3
-					// 지도의 확대 레벨
-					};
-
-					// 지도를 생성합니다    
-					var map = new kakao.maps.Map(mapContainer, mapOption);
-
-					// 주소-좌표 변환 객체를 생성합니다
-					var geocoder = new kakao.maps.services.Geocoder();
-
-					// 주소로 좌표를 검색합니다
-					geocoder.addressSearch('${param.gugun} ${param.dong}', function(result,
-							status) {
-
-						// 정상적으로 검색이 완료됐으면 
-						if (status === kakao.maps.services.Status.OK) {
-
-							var coords = new kakao.maps.LatLng(result[0].y,
-									result[0].x);
-
-							// 지도의 중심을 결과값으로 받은 위치로 이동시킵니다
-							map.setCenter(coords);
-						}
-					});
-
-				})
-	})
-</script> -->
 
 <script type="text/javascript">
 function pagelist(cpage) {
@@ -183,6 +145,26 @@ function pagelist(cpage) {
 	frm.attr('action', "${root}/house/search");
 	frm.submit();
 }
+</script>
+<script>
+	$.getJSON('http://api.openweathermap.org/data/2.5/weather?lat=${position.lat}&lon=${position.lng}&lang=kr&appid=eac3412e6674fc5eae67a740c821e3f4'
+			,function(data){
+		var $type = data.weather[0].description;
+		var $icon = data.weather[0].icon;
+		var $hTemp = data.main.feels_like-273.15;
+		var $minTemp = data.main.temp_min-273.15;
+		var $maxTemp = data.main.temp_max-273.15;
+		var $humidity = data.main.humidity;
+		var $probability = data.clouds.all;
+		
+		$('.clowtemp').append($minTemp + "°C");
+		$('.chightemp').append($maxTemp + "°C");
+		$('.chumidity').append($humidity + "%");
+		$('.ctype').append($type);
+		$('.cprobability').append($probability + "%");	
+		$('.chtemp').append($hTemp + "°C");
+		$('.icon').append("<img src=http://openweathermap.org/img/wn/"+$icon+"@2x.png>")
+	});
 </script>
 
 </head>
@@ -237,7 +219,7 @@ function pagelist(cpage) {
 							<button type="button" class="btn btn-info" onclick="commercial()">상권
 								정보</button>
 							<button type="button" class="btn btn-success" data-toggle="modal"
-								data-target="#envModal">환경 정보</button>
+								data-target="#envModal">날씨 정보</button>
 
 						</form>
 						
@@ -369,11 +351,18 @@ function pagelist(cpage) {
 			<div class="modal-content">
 				<!-- Modal Header -->
 				<div class="modal-header">
-					<h4 class="modal-title">환경 정보</h4>
+					<h4 class="modal-title">${dong } 날씨 정보</h4>
 					<button type="button" class="close" data-dismiss="modal">&times;</button>
 				</div>
 				<!-- Modal body -->
-				<div class="modal-body">Modal body..</div>
+				<div class="modal-body">
+					<div class="icon ctype"></div>
+					<div class="cprobability">강수확률: </div>
+					<div class="chumidity">습도: </div>
+					<div class="chightemp">최고기온: </div>
+					<div class="clowtemp">최저기온: </div>
+					<div class="chtemp">체감기온: </div>
+				</div>
 
 				<!-- Modal footer -->
 				<div class="modal-footer">
