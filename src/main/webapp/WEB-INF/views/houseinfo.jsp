@@ -169,6 +169,75 @@ function pagelist(cpage) {
 	});
 </script>
 
+<script>
+	$.getJSON('http://api.openweathermap.org/data/2.5/air_pollution?lat=${position.lat}&lon=${position.lng}&appid=eac3412e6674fc5eae67a740c821e3f4'
+			,function(data){
+		var $airQual = data.list[0].main.aqi;
+		var $CO = data.list[0].components.co;
+		var $O3 = data.list[0].components.o3;
+		var $pm2_5 = data.list[0].components.pm2_5;
+		var $pm10 = data.list[0].components.pm10;
+		
+		var c;
+		var o;
+		var p25;
+		var p10;
+				
+		if($airQual == 1)
+			$airQual = "매우 좋음";
+		else if ($airQual == 2)
+			$airQual = "좋음";
+		else if ($airQual == 3)
+			$airQual = "보통";
+		else if ($airQual == 4)
+			$airQual = "나쁨";
+		else if ($airQual == 5)
+			$airQual = "매우 나쁨";
+		
+		if($pm10>0 && $pm10<=30)
+			p10="좋음";
+		else if($pm10>30 && $pm10<=80)
+			p10="보통";
+		else if($pm10>80 && $pm10<150)
+			p10="나쁨";
+		else if($pm10>150)
+			p10="매우 나쁨";
+		
+		if($pm2_5>0 && $pm2_5<=15)
+			p25="좋음";
+		else if($pm2_5>15 && $pm2_5<=35)
+			p25="보통";
+		else if($pm2_5>35 && $pm2_5<75)
+			p25="나쁨";
+		else if($pm2_5>75)
+			p25="매우 나쁨";
+		
+		if($O3>0 && $O3<=80)
+			o="좋음";
+		else if($O3>80 && $O3<=150)
+			o="보통";
+		else if($O3>150 && $O3<200)
+			o="나쁨";
+		else if($O3>200)
+			o="매우 나쁨";
+		
+		if($CO>0 && $CO<=300)
+			c="좋음";
+		else if($CO>300 && $CO<=900)
+			c="보통";
+		else if($CO>900 && $CO<1500)
+			c="나쁨";
+		else if($CO>1500)
+			c="매우 나쁨";
+		
+		$('.airQ').append($airQual);
+		$('.co').append($CO + " ㎍/㎥" + " (" + c +")");
+		$('.o3').append($O3 + " ㎍/㎥" + " (" + o +")");
+		$('.pm25').append($pm2_5 + " ㎍/㎥" + " (" + p25 +")");
+		$('.pm10').append($pm10 + " ㎍/㎥" + " (" + p10 +")");
+	});
+</script>
+
 </head>
 
 <body>
@@ -221,7 +290,9 @@ function pagelist(cpage) {
 							<button type="button" class="btn btn-info" onclick="commercial()">상권
 								정보</button>
 							<button type="button" class="btn btn-success" data-toggle="modal"
-								data-target="#envModal">날씨 정보</button>
+								data-target="#weatherModal">날씨 정보</button>
+							<button type="button" class="btn btn-warning" data-toggle="modal"
+								data-target="#airpollutionModal">대기질 정보</button>
 
 						</form>
 						
@@ -348,7 +419,7 @@ function pagelist(cpage) {
 	<script src="/assets/js/user.js"></script>
 	<!-- 환경 정보 Modal  -->
 	<!-- The Modal -->
-	<div class="modal fade" id="envModal">
+	<div class="modal fade" id="weatherModal">
 		<div class="modal-dialog modal-dialog-centered">
 			<div class="modal-content">
 				<!-- Modal Header -->
@@ -364,6 +435,40 @@ function pagelist(cpage) {
 					<div class="chightemp">최고기온: </div>
 					<div class="clowtemp">최저기온: </div>
 					<div class="chtemp">체감기온: </div>
+					<br>
+					<h6 class="link">
+       					<a href="https://www.weather.go.kr/w/index.do" target="_blank">날씨 정보 자세히 알아보기</a>
+    				</h6>
+				</div>
+
+				<!-- Modal footer -->
+				<div class="modal-footer">
+					<button type="button" class="btn btn-primary" data-dismiss="modal">창
+						닫기</button>
+				</div>
+			</div>
+		</div>
+	</div>
+	<div class="modal fade" id="airpollutionModal">
+		<div class="modal-dialog modal-dialog-centered">
+			<div class="modal-content">
+				<!-- Modal Header -->
+				<div class="modal-header">
+					<h4 class="modal-title">${dong } 대기질 정보</h4>
+					<button type="button" class="close" data-dismiss="modal">&times;</button>
+				</div>
+				<!-- Modal body -->
+				<div class="modal-body">
+					<h4 class="airQ">대기질 지수: </h4>
+					<br>
+					<div class="pm10">미세먼지 농도: </div>
+					<div class="pm25">초미세먼지 농도: </div>
+					<div class="co">일산화탄소 농도: </div>
+					<div class="o3">오존 농도: </div>
+					<br>
+					<h6 class="link">
+       					<a href="https://www.airkorea.or.kr/web" target="_blank">대기질 정보 자세히 알아보기</a>
+    				</h6>
 				</div>
 
 				<!-- Modal footer -->
