@@ -151,18 +151,20 @@ function pagelist(cpage) {
 			,function(data){
 		var $type = data.weather[0].description;
 		var $icon = data.weather[0].icon;
-		var $hTemp = data.main.feels_like-273.15;
-		var $minTemp = data.main.temp_min-273.15;
-		var $maxTemp = data.main.temp_max-273.15;
+		var $cTemp = Math.round(data.main.temp-273.15);
+		var $hTemp = Math.round(data.main.feels_like-273.15);
+		var $minTemp = Math.round(data.main.temp_min-273.15);
+		var $maxTemp = Math.round(data.main.temp_max-273.15);
 		var $humidity = data.main.humidity;
 		var $probability = data.clouds.all;
 		
 		$('.clowtemp').append($minTemp + "°C");
 		$('.chightemp').append($maxTemp + "°C");
 		$('.chumidity').append($humidity + "%");
-		$('.ctype').append($type);
+		$('.ctype').append($type+" ");
 		$('.cprobability').append($probability + "%");	
 		$('.chtemp').append($hTemp + "°C");
+		$('.ctemp').append(" ("+$cTemp + "°C)");
 		$('.icon').append("<img src=http://openweathermap.org/img/wn/"+$icon+"@2x.png>")
 	});
 </script>
@@ -356,7 +358,7 @@ function pagelist(cpage) {
 				</div>
 				<!-- Modal body -->
 				<div class="modal-body">
-					<div class="icon ctype"></div>
+					<h4 class="icon ctype ctemp"></h4>
 					<div class="cprobability">강수확률: </div>
 					<div class="chumidity">습도: </div>
 					<div class="chightemp">최고기온: </div>
