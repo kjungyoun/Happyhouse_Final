@@ -4,6 +4,7 @@ $(document).ready(function(){
 	})
 		
 function getCityInfo(){
+	
 		$.ajax({
 			type:'GET',
 			url:'/select',
@@ -53,11 +54,11 @@ function getCityInfo(){
 			dataType:'json',
 			success: function(result){
 				// select box 초기화
-				$('#dong').find('option').remove().end().append("<option disabled selected>동</option>")
+				$('#dongName').find('option').remove().end().append("<option disabled selected>동</option>")
 				
 				// List 개수만큼 option 추가
 				$.each(result,function(idx){
-					$('#dong').append("<option value='"+result[idx]+"'>"+result[idx]+"</option>")
+					$('#dongName').append("<option value='"+result[idx]+"'>"+result[idx]+"</option>")
 				})
 			},
 			error : function(jqXHR, status, err){

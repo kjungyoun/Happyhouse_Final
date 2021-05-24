@@ -102,9 +102,12 @@ public class PageBean {
 	public void setInterval(int interval) {
 		this.interval = interval;
 	}
+	
 	@Override
 	public String toString() {
-		return "PageBean [key=" + key + ", word=" + word + ", pageNo=" + pageNo + ", interval=" + interval + "]";
+		return "PageBean [key=" + key + ", word=" + word + ", pageNo=" + pageNo + ", interval=" + interval + ", code="
+				+ code + ", dong=" + dong + ", aptName=" + aptName + ", startNo=" + startNo + ", pageLink=" + pageLink
+				+ "]";
 	}
 	public void setPageLink(String pageLink) {
 		this.pageLink = pageLink;

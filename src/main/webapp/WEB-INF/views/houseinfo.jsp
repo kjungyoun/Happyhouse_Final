@@ -46,13 +46,95 @@
 	src="//dapi.kakao.com/v2/maps/sdk.js?appkey=91faec44501a2bd12af0827ba9208626&libraries=services,clusterer,drawing"></script>
 <!-- Template Main CSS File -->
 <link href="/assets/css/style.css" rel="stylesheet">
+<c:set var="gugun" value="${list[0].base.gugun}" />
 <script type="text/javascript">
 $(document).ready(function(){
-	var moveLatLon = new kakao.maps.LatLng(${position.lat}, ${position.lng});
+	var moveLatLon = new kakao.maps.LatLng('${position.lat}', '${position.lng}');
 	map.setCenter(moveLatLon)
+	
+	var city = '${list[0].base.city}'
+	var gugun = '${list[0].base.gugun}'
+	console.log(city)
+	console.log(gugun)
+		getCityInfo(city, gugun)
+	
 })
 </script>
 
+<script type="text/javascript">
+function getCityInfo(city,gugun){
+	
+	$.ajax({
+		type:'GET',
+		url:'/select',
+		dataType:'json',
+		success: function(result){
+			// select box 초기화
+			$('#city').find('option').remove().end()
+			// List 개수만큼 option 추가
+			$.each(result,function(idx){
+				if(city == result[idx]){
+				$('#city').append("<option value='"+result[idx]+"' id='"+result[idx]+"' selected>"+result[idx]+"</option>" )					
+				}else{
+					$('#city').append("<option value='"+result[idx]+"' id='"+result[idx]+"'>"+result[idx]+"</option>" )
+				}
+			})
+			getGugunInfo($('#city').val(),gugun)
+		},
+		error : function(jqXHR, status, err){
+			alert('city 정보를 가져오는 중 오류 발생!')
+		}
+	})
+}
+
+function getGugunInfo(city,gugun){
+	$.ajax({
+		type:'GET',
+		url:'/select/'+city,
+		dataType:'json',
+		success: function(result){
+			// select box 초기화
+			
+			$('#gugun').find('option').remove().end()
+			$.each(result,function(idx){
+				if(gugun == result[idx]){
+					$('#gugun').append("<option value='"+result[idx]+"' id='"+result[idx]+"' selected>"+result[idx]+"</option>" )					
+					}else{
+						$('#gugun').append("<option value='"+result[idx]+"' id='"+result[idx]+"'>"+result[idx]+"</option>" )
+					}
+			})
+			
+			// List 개수만큼 option 추가
+			
+		},
+		error : function(jqXHR, status, err){
+			alert('gugun 정보를 가져오는 중 오류 발생!')
+		}
+	})
+}
+
+
+function getDongInfo(gugun){
+	let city = $('#city').val()
+	$.ajax({
+		type:'GET',
+		url:'/select/'+city+'/'+gugun,
+		dataType:'json',
+		success: function(result){
+			// select box 초기화
+			$('#dongName').find('option').remove().end().append("<option disabled selected>동</option>")
+			
+			// List 개수만큼 option 추가
+			$.each(result,function(idx){
+				$('#dongName').append("<option value='"+result[idx]+"'>"+result[idx]+"</option>")
+			})
+		},
+		error : function(jqXHR, status, err){
+			alert('dong 정보를 가져오는 중 오류 발생!')
+		}
+	})
+}
+</script>
 
 <!-- 
 <script type="text/javascript">
@@ -124,7 +206,7 @@ function pagelist(cpage) {
 					<div class="col-lg-12 ml-auto" data-aos="fade-down">
 						<form id="form">
 							<input type='hidden' name='pageNo' id="pageNo" /> <input
-								type='hidden' name='dong' value="${list[0].dong }" /> <input
+								type='hidden' name='dong' id="dong" value="${list[0].dong }" /> <input
 								type='hidden' name='code' id="code" value="${list[0].code }" />
 							<input type='hidden' name='aptName' id="aptName"
 								value="${list[0].aptName }" /> <input type='hidden' name='lat'
@@ -143,10 +225,8 @@ function pagelist(cpage) {
 								</select>
 							</div>
 							<div class="form-group d-inline-block">
-								<select class="form-control" id="dong" name="dong"
-									value="${bean.word}">
-
-									<option disabled selected>동</option>
+								<select class="form-control" id="dongName" name="dongName">
+									<option selected value="${bean.dong }">${bean.dong }</option>
 								</select>
 							</div>
 
@@ -160,9 +240,8 @@ function pagelist(cpage) {
 								data-target="#envModal">환경 정보</button>
 
 						</form>
+						
 						<div class="map_wrap">
-						<div id="map"
-							style="width: 1200px; height: 450px; margin-left: auto; margin-right: auto; "></div>
 
 						<ul id="category" style="display:none">
 							<li id="BK9" data-order="0"><span class="category_bg bank"></span>
@@ -179,6 +258,8 @@ function pagelist(cpage) {
 								편의점</li>
 						</ul>
 					</div>
+					<div id="map"
+							style="width: 1200px; height: 450px; margin-left: auto; margin-right: auto; "></div>
 					</div>
 
 
@@ -189,9 +270,9 @@ function pagelist(cpage) {
 								<h3 class="text-danger">조회할 상품 정보가 없습니다.</h3>
 							</c:when>
 							<c:when test="${not empty list}">
-								<ul class="nav nav-tabs flex-column mt-5">
+								<ul class="nav nav-tabs flex-column">
 									<div>
-										<h1 class="title mt-5">거래 정보</h1>
+										<h1 class="title">거래 정보</h1>
 										<div class="separator-2"></div>
 										<c:forEach var="house" items="${list}">
 											<div class="media margin-clear mt-3">
@@ -306,7 +387,6 @@ function pagelist(cpage) {
 	<script src="/assets/js/main.js"></script>
 	<script src="/assets/js/user.js"></script>
 	<script src="/assets/js/map.js"></script>
-	<script src="/assets/js/selectbox.js"></script>
 </body>
 
 </html>

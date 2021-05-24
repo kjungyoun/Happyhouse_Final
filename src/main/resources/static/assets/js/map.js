@@ -6,7 +6,10 @@ var options = {
 };
 
 const map = new kakao.maps.Map(container, options);
-	$.ajax({
+
+var overlay = null;
+
+$.ajax({
 		type:'GET',
 		url: '/aptPosition/',
 		dataType:'json',
@@ -32,10 +35,10 @@ const map = new kakao.maps.Map(container, options);
 				// 커스텀 오버레이에 표시할 컨텐츠 입니다
 				// 커스텀 오버레이는 아래와 같이 사용자가 자유롭게 컨텐츠를 구성하고 이벤트를 제어할 수 있기 때문에
 				// 별도의 이벤트 메소드를 제공하지 않습니다 
-				var content = `<div class="wrap">
+				 var content = document.createElement('div');
+				var inner = `<div class="wrap">
 								<div class="info">
 				                    <div class="title">${item.aptName}					
-				                    	<div class="close" id="close" title="닫기"></div>
 				                    </div>
 				                    <div class="body"> 
 				                        <div class="img">
@@ -50,8 +53,19 @@ const map = new kakao.maps.Map(container, options);
 				                </div>   
 				            </div>
 				            `
-			
+				content.innerHTML = inner
 				            
+				var closeBtn = document.createElement('button');
+				closeBtn.style.cssText = 'width:50px; height:28px; position: absolute; top: -170px; left:90px;';
+			    closeBtn.appendChild(document.createTextNode('X'));
+			    // 닫기 이벤트 추가
+			    closeBtn.onclick = function() {
+			        overlay.setMap(null);
+			    };
+
+			    content.appendChild(closeBtn);
+			    
+			    
 				         // 마커 위에 커스텀오버레이를 표시합니다
 				         // 마커를 중심으로 커스텀 오버레이를 표시하기위해 CSS를 이용해 위치를 설정했습니다
 				         var overlay = new kakao.maps.CustomOverlay({
@@ -62,7 +76,6 @@ const map = new kakao.maps.Map(container, options);
 				      // 마커를 클릭했을 때 커스텀 오버레이를 표시합니다
 				         kakao.maps.event.addListener(marker, 'click', function() {
 				             if(!overlay.getMap()){
-				            	 console.log(overlay)
 				            	 overlay.setMap(map);				            	 
 				             }
 				             else{
@@ -72,11 +85,6 @@ const map = new kakao.maps.Map(container, options);
 				         
 				         // 마커 등록
 				         marker.setMap(map);
-				         
-				         // 커스텀 오버레이를 닫기 위해 호출되는 함수입니다 
-				         $(document).on("click","#close",function(){
-				        		overlay.setMap(null);     
-				        	 });
 				         
 			})
 		},error : function(jqXHR, status, err){
@@ -88,7 +96,7 @@ const map = new kakao.maps.Map(container, options);
 function mvLocation(){
 		let city = $('#city').val()
 		let gugun = $('#gugun').val()
-		let dong = $('#dong').val()
+		let dong = $('#dongName').val()
 		$.ajax({
 			type:'GET',
 			url: '/location/'+city+'/'+gugun+'/'+dong,

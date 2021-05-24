@@ -1,6 +1,8 @@
 package com.ssafy.happyhouse.controller;
 
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -22,8 +24,11 @@ public class HouseController {
 	
 	@GetMapping("/search")
 	public String mvsearch(PageBean bean, Double lat, Double lng, Model model)throws Exception {
-		model.addAttribute("list", houseService.searchHouse(bean));
+		System.out.println(bean);
+		List<HouseDto> list = houseService.searchHouse(bean);
+		model.addAttribute("list", list);
 		model.addAttribute("bean", bean);
+		System.out.println(list);
 		HouseDto position = new HouseDto();
 		position.setLat(lat);
 		position.setLng(lng);
@@ -37,6 +42,7 @@ public class HouseController {
 		bean.setCode(code);
 		bean.setDong(dong);
 		bean.setAptName(aptName);
+		System.out.println(bean);
 		model.addAttribute("list", houseService.searchDetail(bean));
 		model.addAttribute("bean", bean);
 		HouseDto position = new HouseDto();
