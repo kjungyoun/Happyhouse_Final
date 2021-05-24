@@ -44,6 +44,7 @@
           <article class="card-body mx-auto" style="max-width: 400px;">
             <h4 class="card-title text-center mt-3">Create Account</h4>
             <form id="signupform" action="" method="post">
+            <input type="hidden" name="type" value="register">
                 <div class="check_font" id="validId"></div>
               <div class="form-group input-group">
                 <div class="input-group-prepend">
@@ -74,6 +75,10 @@
                   <span class="input-group-text"> <i class="fa fa-envelope"></i> </span>
                 </div>
                 <input id = "email" name="email" class="form-control" placeholder="Email address" type="email">
+                <input id = "emailCheck" name="emailCheck" type="hidden">
+                <span class="input-group-btn">
+                <button type="button" id="authBtn" onclick="javascript:authentication();" class="btn btn-warning btn-block ml-1"> 인증하기 </button>
+                </span>
               </div> <!-- form-group// --> 
               <div class="form-group">
                 <button type="button" onclick="javascript:signup();" class="btn btn-primary btn-block"> 가입하기 </button>
@@ -124,29 +129,83 @@
         <div class="modal-body">
           <article class="card-body mx-auto" style="max-width: 400px;">
             <h4 class="card-title text-center mt-3">비밀번호 찾기</h4>
-            <form>
+            <form id="findForm" method="post">
+            <input type="hidden" id="type" name="type" value="find">
               <div class="form-group input-group">
                 <div class="input-group-prepend">
                     <span class="input-group-text"> <i class="fa fa-user"></i> </span>
                 </div>
-                <input name="" class="form-control" placeholder="ID" type="text">
-              </div> <!-- form-group// -->
-              <div class="form-group input-group">
-                <div class="input-group-prepend">
-                    <span class="input-group-text"><i class="far fa-smile"></i></span>
-                </div>
-                <input name="" class="form-control" placeholder="Name" type="text">
-              </div> <!-- form-group// -->     
+                <input name="useridF" class="form-control" id="useridF" placeholder="ID" type="text">
+              </div> <!-- form-group// -->  
               <div class="form-group input-group">
                 <div class="input-group-prepend">
                   <span class="input-group-text"> <i class="fa fa-envelope"></i> </span>
                 </div>
-                <input name="" class="form-control" placeholder="Email address" type="email">
+                <input name="emailF" class="form-control" id="emailF" placeholder="Email address" type="email">
               </div> <!-- form-group// --> 
               <div class="form-group">
-                <button type="submit" onclick="" class="btn btn-primary btn-block">이메일 전송 </button>
+                <button type="button" onclick="findPassword()" class="btn btn-primary btn-block">이메일 전송 </button>
               </div> <!-- form-group// -->      
-              <p class="text-center">입력하신 이메일로 임시 비밀번호가 전송됩니다.</p>                                                                 
+              <p class="text-center text-success">입력하신 이메일로 임시 비밀번호가 전송됩니다.</p>                                                                 
+            </form>
+          </article>
+        </div>
+      </div>
+    </div>
+  </div>
+  
+  <!-- changePW Password Modal -->
+  <div class="modal" id="changePWModal">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-body">
+          <article class="card-body mx-auto" style="max-width: 400px;">
+            <h4 class="card-title text-center mt-3">비밀번호 변경</h4>
+            <form id="changeForm" action="/user/changepw" method="POST" >
+            <input type="hidden" id="useridN" name="useridN" value="${userid }">
+                <div>새 비밀번호:</div> 
+              <div class="form-group input-group">
+                <div class="input-group-prepend">
+                    <span class="input-group-text"> <i class="fa fa-lock"></i> </span>
+                </div>
+                <input name="userpwdN" class="form-control " id="userpwdN" placeholder="new Password" type="password">
+              </div> <!-- form-group// -->  
+                <div>새 비밀번호 확인:</div>
+              <div class="form-group input-group">
+                <div class="input-group-prepend">
+                  <span class="input-group-text"> <i class="fa fa-lock"></i> </span>
+                </div>
+                <input name="userpwdN2" class="form-control " id="userpwdN2" placeholder="new Password" type="password">
+              </div> <!-- form-group// --> 
+              <div class="form-group">
+                <button type="button" onclick="changePwd()" class="btn btn-primary btn-block">변경하기</button>
+              </div> <!-- form-group// -->      
+              <p class="text-center text-success">새로운 비밀번호로 변경됩니다.</p>                                                                 
+            </form>
+          </article>
+        </div>
+      </div>
+    </div>
+  </div>
+  
+  <!-- Auth Email Modal -->
+  <div class="modal" id="authModal">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-body">
+          <article class="card-body mx-auto" style="max-width: 400px;">
+            <h4 class="card-title text-center mt-3">이메일 인증</h4>
+            <form action="/user/auth/${dice }/${type}" method="POST">
+            <input type="hidden" name="type" value="${type }">
+            <input type="hidden" name="useridC" value="${userid }">
+              <span style="color: green; font-weight: bold;">입력한 이메일로 받은 인증번호를 입력하세요.</span>
+              <br> <br>
+              <div class="form-group input-group">
+                인증번호 입력: <input name="code" class="form-control ml-3" placeholder="인증번호를 입력하세요." type="number">
+              </div> <!-- form-group// --> 
+              <div class="form-group">
+                <button type="submit" class="btn btn-primary btn-block">인증하기 </button>
+              </div> <!-- form-group// -->                                                                    
             </form>
           </article>
         </div>

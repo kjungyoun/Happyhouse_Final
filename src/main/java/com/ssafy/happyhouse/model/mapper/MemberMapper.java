@@ -32,5 +32,9 @@ public interface MemberMapper {
 	int totalCount(PageBean bean);
 	
 	String validId(String userid);
+	
+	MemberDto findMember(MemberDto member);
+	
+	int changePwd(MemberDto member);
 
 }

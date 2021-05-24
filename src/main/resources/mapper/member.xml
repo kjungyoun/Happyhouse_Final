@@ -59,4 +59,19 @@
 		</where>
 	</select>
 	
+	<select id="findMember" parameterType="memberDto" resultType="memberDto">
+		select * from member
+		<where>
+			userid = #{userid}
+			and
+			email = #{email}
+		</where>
+	</select>
+	
+	<update id="changePwd" parameterType="memberDto">
+		update member
+		set userpwd = #{userpwd}
+		where userid = #{userid}
+	</update>
+	
 </mapper>

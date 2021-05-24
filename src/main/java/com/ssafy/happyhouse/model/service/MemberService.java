@@ -27,5 +27,9 @@ public interface MemberService {
 	List<MemberDto> searchAll(PageBean bean)throws Exception;
 	
 	int validId(String userid) throws Exception;
+	
+	int findMember(MemberDto member) throws Exception;
+	
+	int changePwd(MemberDto member) throws Exception;
 
 }

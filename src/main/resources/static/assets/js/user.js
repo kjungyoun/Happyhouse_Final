@@ -75,6 +75,10 @@ function signup(){
 		alert("이메일 입력!!!");
 		$('#email').focus()
 		return;
+	}else if($("#emailCheck").val() != "Y") {
+		alert("이메일 인증이 필요합니다!!!");
+		$('#email').focus()
+		return;
 	} else {
 		alert("회원가입에 성공했습니다!");
 		document.getElementById("signupform").action = "/user/register";
@@ -94,5 +98,72 @@ function login() {
 	} else {
 		document.getElementById("loginform").action = "/user/login";
 		document.getElementById("loginform").submit();
+	}
+}
+
+function authentication(){
+	if($('#email').val() == ""){
+		alert("이메일 입력!!!");
+		$('#email').focus()
+		return;
+	}else if($('#emailCheck').val() == 'Y'){
+		alert("이미 인증이 되었습니다!");
+		return;
+	}else{
+		document.getElementById("signupform").action = "/user/auth";
+		document.getElementById("signupform").submit();
+	}
+}
+
+function findPassword(){
+	if($("#useridF").val() == "") {
+		alert("아이디 입력!!!");
+		$('#useridF').focus()
+		return;
+	}else if($('#emailF').val() == ""){
+		alert("이메일 입력!!!");
+		$('#emailF').focus()
+		return;
+	}else{
+		var userid = $('#useridF').val()
+		var email = $('#emailF').val()
+		$.ajax({
+			type:'GET',
+			url:'/user/find/'+userid+'/'+email,
+			data: {
+				userid: userid,
+				email: email
+			},
+			dataType: 'json',
+			success:function(data){
+				if(data == 1){
+					document.getElementById("findForm").action = "/user/auth";
+					document.getElementById("findForm").submit();
+				}else{
+					alert("일치하는 정보가 없습니다. 다시 확인해주세요!");
+					$('#useridF').focus()
+					return;
+				}
+			}
+		})
+	}
+}
+
+function changePwd(){
+	if($("#userpwdN").val() == "") {
+		alert("비밀번호를 입력하세요!");
+		$('#userpwdN').focus()
+		return;
+	}else if($('#userpwdN2').val() == ""){
+		alert("비밀번호를 입력하세요!");
+		$('#userpwdN2').focus()
+		return;
+	}else if($("#userpwdN").val() != $("#userpwdN2").val()) {
+		alert("비밀번호 확인하세요!!!");
+		$('#userpwdN2').focus()
+		return;
+	}else{
+		document.getElementById("changeForm").action = "/user/change";
+		document.getElementById("changeForm").submit();
 	}
 }

@@ -14,7 +14,37 @@
 			$('#loginModal').modal({
 				fadeDuration: 250
 			})
-		}	
+		}
+		
+		// 이메일 인증 modal 창 띄움
+		if('${dice}'){
+			$('#authModal').modal({
+				fadeDuration: 250
+			})
+		}
+		
+		// 회원 가입 modal 창 띄움
+		if('${authorize}' && '${type}' == 'register'){
+			$('#signupModal').modal({
+				fadeDuration: 250
+			})
+			$('#email').val('${email}')
+			$('#email').attr("readonly", "true")
+			$('#emailCheck').val('Y')
+			$('#authBtn').css("display", "none")
+		}
+		
+		// 비밀번호 수정 modal 창 띄움
+		if('${authorize}' && '${type}' == 'find'){
+			console.log('${userid}')
+			$('#changePWModal').modal({
+				fadeDuration: 250
+			})
+		}
+		
+		if('${alert}'){
+			alert('${alert}')
+		}
 		})
 </script>
 

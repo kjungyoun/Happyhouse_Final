@@ -68,4 +68,17 @@ public class MemberServiceImpl implements MemberService {
 		else return 1;
 	}
 
+	@Override
+	public int findMember(MemberDto member) throws Exception {
+		MemberDto res = memberMapper.findMember(member);
+		if(res == null) return 0;
+		else return 1;
+	}
+
+	@Override
+	public int changePwd(MemberDto member) throws Exception {
+		return memberMapper.changePwd(member);
+		
+	}
+
 }
