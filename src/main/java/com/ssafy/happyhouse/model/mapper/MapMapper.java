@@ -5,6 +5,7 @@ import java.util.List;
 import org.apache.ibatis.annotations.Mapper;
 
 import com.ssafy.happyhouse.model.BaseAddr;
+import com.ssafy.happyhouse.model.BusDto;
 import com.ssafy.happyhouse.model.HouseDto;
 import com.ssafy.happyhouse.model.SubwayDto;
 
@@ -16,4 +17,6 @@ public interface MapMapper {
 	List<HouseDto> getAptPosition();
 	
 	List<SubwayDto> getSubway();
+	
+	List<BusDto> getBus();
 }

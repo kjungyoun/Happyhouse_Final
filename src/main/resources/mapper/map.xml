@@ -47,4 +47,9 @@
 		from subway
 	</select>
 	
+	<select id="getBus" resultType="busDto">
+		select id, name, code, lng, lat
+		from bus
+	</select>
+	
 </mapper>

@@ -292,7 +292,8 @@ function pagelist(cpage) {
 								data-target="#weatherModal"><i class="bx bx-cloud mr-1"></i>날씨</button>
 							<button type="button" class="btn btn-warning" data-toggle="modal"
 								data-target="#airpollutionModal"><i class="bx bx-health mr-1"></i>대기질</button>
-								<button type="button" class="btn btn-secondary" id="subwayBtn" value="false" onclick="trafficinfo(this.value)"><i class="bx bx-trip mr-1"></i>교통 정보</button>
+							<button type="button" class="btn" id="subwayBtn" style="background-color: violet; color:white" value="false" onclick="subwayInfo(this.value)"><i class="bx bx-trip mr-1"></i>지하철 역</button>
+							<button type="button" class="btn" style="background-color: pink" id="busBtn" value="false" onclick="busInfo(this.value)"><i class="bx bx-bus mr-1"></i>버스 정류장</button>
 
 						</form>
 						

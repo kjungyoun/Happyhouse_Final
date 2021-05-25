@@ -328,16 +328,7 @@ function commercial(){
 
 var markers = [];
 
-function trafficinfo(isMark){
-// $.ajax({
-// type:'GET',
-// url:'http://openapi.seoul.go.kr:8088/47464449426b6a7934324558444c4e/json/busStopLocationXyInfo/1/1000/',
-// dataType:'json',
-// success:function(data){
-// console.log(data)
-// }
-// })
-	
+function subwayInfo(isMark){
 	// 지하철역 정보 가져오기
 		var positions = [];
 		$.ajax({
@@ -352,7 +343,7 @@ function trafficinfo(isMark){
 					}
 					positions.push(obj);
 				})
-				var imageSrc = "https://image.flaticon.com/icons/png/512/4551/4551380.png";
+				var imageSrc = "https://image.flaticon.com/icons/png/512/2855/2855645.png";
 				
 				for (var i = 0; i < positions.length; i ++) {
 				
@@ -385,17 +376,77 @@ function trafficinfo(isMark){
 			}
 				if(isMark == "false"){
 					$('#subwayBtn').val("true")
-					setMarkers(map)    
+					setMarkers(map, markers)    
 				}else{
 					$('#subwayBtn').val("false")
-					setMarkers(null); 
+					setMarkers(null, markers); 
+				}
+		}
+	})
+}
+
+var busMarkers = [];
+
+function busInfo(isMark){
+	// 버스 정류장 정보 가져오기
+		var positions = [];
+		$.ajax({
+			type:'GET',
+			url:'/bus',
+			dataType:'json',
+			success:function(data){
+				console.log(data)
+				data.forEach(function(item,idx){
+					var obj = {
+							content : '<h5>정류장 이름: </h5><div>'+item.name +'정류장('+item.code+')</div>',
+							latlng : new kakao.maps.LatLng(item.lat, item.lng)
+					}
+					positions.push(obj);
+				})
+				var imageSrc = "https://image.flaticon.com/icons/png/512/2107/2107284.png";
+				
+				for (var i = 0; i < positions.length; i ++) {
+				
+				// 마커 이미지의 이미지 크기 입니다
+				 var imageSize = new kakao.maps.Size(50,52); 
+				    
+				// 마커 이미지를 생성합니다
+				var markerImage = new kakao.maps.MarkerImage(imageSrc, imageSize);
+				
+				  // 마커를 생성합니다
+			    var marker = new kakao.maps.Marker({
+			        position: positions[i].latlng, // 마커를 표시할 위치
+			        image : markerImage // 마커 이미지
+			    });
+			    
+			 // 마커에 표시할 인포윈도우를 생성합니다 
+			    var infowindow = new kakao.maps.InfoWindow({
+			        content: positions[i].content // 인포윈도우에 표시할 내용
+			    });
+			    
+			 // 마커에 mouseover 이벤트와 mouseout 이벤트를 등록합니다
+			    // 이벤트 리스너로는 클로저를 만들어 등록합니다 
+			    // for문에서 클로저를 만들어 주지 않으면 마지막 마커에만 이벤트가 등록됩니다
+			    kakao.maps.event.addListener(marker, 'mouseover', makeOverListener(map, marker, infowindow));
+			    kakao.maps.event.addListener(marker, 'mouseout', makeOutListener(infowindow));
+			    
+			    // 생성된 마커를 배열에 추가합니다
+			    busMarkers.push(marker);
+			    
+			}
+				if(isMark == "false"){
+					$('#busBtn').val("true")
+					setMarkers(map, busMarkers)    
+				}else{
+					$('#busBtn').val("false")
+					setMarkers(null,busMarkers); 
 				}
 		}
 	})
 }
 
 // 마커를 배열에 저장하는 함수
-function setMarkers(map) {
+function setMarkers(map, markers) {
     for (var i = 0; i < markers.length; i++) {
         markers[i].setMap(map);
     }            

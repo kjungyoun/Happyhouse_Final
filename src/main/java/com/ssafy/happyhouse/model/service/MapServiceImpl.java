@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.ssafy.happyhouse.model.BaseAddr;
+import com.ssafy.happyhouse.model.BusDto;
 import com.ssafy.happyhouse.model.HouseDto;
 import com.ssafy.happyhouse.model.SubwayDto;
 import com.ssafy.happyhouse.model.mapper.MapMapper;
@@ -29,6 +30,11 @@ public class MapServiceImpl implements MapService {
 	@Override
 	public List<SubwayDto> getSubway() throws Exception {
 		return map.getSubway();
+	}
+
+	@Override
+	public List<BusDto> getBus() throws Exception {
+		return map.getBus();
 	}
 
 }
