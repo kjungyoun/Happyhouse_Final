@@ -22,6 +22,11 @@ public class HomeController {
 		return "notice";
 	}
 	
+	@RequestMapping(value = "/noticeinfo", method = RequestMethod.GET)
+	public String noticeinfo() {
+		return "noticeinfo";
+	}
+	
 	@RequestMapping(value = "/qna", method =  RequestMethod.GET)
 	public String qna() {
 		return "qna";

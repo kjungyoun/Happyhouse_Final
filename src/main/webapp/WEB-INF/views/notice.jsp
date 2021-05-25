@@ -49,7 +49,7 @@
             <tbody>
                 <tr>
                     <td>1</td>
-                    <td class="selectPost"><a href="/postAdmin.jsp" style="color: black;">HappyHouse 웹사이트가 서비스를 시작했어요!</a></td>
+                    <td class="selectPost"><a href="${root}/noticeinfo" style="color: black;">HappyHouse 웹사이트가 서비스를 시작했어요!</a></td>
                     <td>관리자</td>
                     <td>4</td>
                     <td>2021/03/15</td>
