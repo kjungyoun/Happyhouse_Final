@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.ssafy.happyhouse.model.BaseAddr;
+import com.ssafy.happyhouse.model.BusDto;
 import com.ssafy.happyhouse.model.HouseDto;
 import com.ssafy.happyhouse.model.SubwayDto;
 import com.ssafy.happyhouse.model.service.AddressService;
@@ -70,6 +71,12 @@ public class AjaxController {
 	@GetMapping("/subway")
 	public ResponseEntity<List<SubwayDto>> getSubway() throws Exception{
 		List<SubwayDto> res = mapService.getSubway();
+		return new ResponseEntity(res, HttpStatus.OK);
+	}
+	
+	@GetMapping("/bus")
+	public ResponseEntity<List<BusDto>> getBus() throws Exception{
+		List<BusDto> res = mapService.getBus();
 		return new ResponseEntity(res, HttpStatus.OK);
 	}
 	
