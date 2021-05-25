@@ -3,7 +3,37 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <!DOCTYPE html>
 <html lang="en">
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+<script type="text/javascript">
+$(function(){
+	if('${msg}'){
+		alert('${msg}')
+		return;
+	}
+})
 
+function modifyNotice(){
+	 if($('#title').val() == ''){
+		 alert('제목을 입력하세요!')
+		 $('#title').focus()
+		 return;
+	 }else if($('#contents').val() == ''){
+		 alert('내용을 입력하세요!')
+		 $('#contents').focus()
+		 return;
+	 }else{
+		 $('#modifyForm').attr("action", "/modifyNotice")
+		 $('#modifyForm').submit()
+	 }
+}
+
+function deleteNotice(){
+	var check = confirm("정말 공지사항을 삭제하시겠습니까?");
+	if(check){
+		location.href="/deleteNotice?no="+${notice.no};
+	}
+}
+</script>
 <body>
 	<jsp:include page="include/header.jsp" />
 
@@ -19,13 +49,14 @@
 	<main id="main">
 		<section id="" class="p-1">
 			<div class="container">
-					<h2 class="title text-center">제목</h2>
+					<h2 class="title text-center">${notice.title }</h2>
 					<div class="row pt-3 pb-3">
-					<h5 class="author col-sm-8">작성자: </h5>
-					<h5 class="date col-sm-4">작성일: </h5>
+					<h5 class="author col-sm-4">작성자: 관리자</h5>
+					<h5 class="date col-sm-4">작성일: ${notice.regdate }</h5>
+					<h5 class="date col-sm-4">조회수: ${notice.viewCnt }</h5>
 					</div>
 					<div class="card container-fluid pt-3 pb-3 border clearfix">
-					공지사항 내용
+					${notice.contents }
 					</div>
 					
 					<br>
@@ -33,8 +64,10 @@
 					<button type="button" class="btn btn-warning">
 					<a href="${root}/notice" style="color: black;">목록</a>
 					</button>
-					<button type="button" class="btn btn-success">수정</button>
-					<button type="button" class="btn btn-danger">삭제</button>
+					<c:if test="${userinfo.userid == 'admin' }">
+					<button type="button" class="btn btn-success" data-toggle="modal" data-target="#modifyModal" >수정</button>
+					<button type="button" class="btn btn-danger" onclick="deleteNotice()">삭제</button>
+					</c:if>
 				</div>
 			</div>
 		</section>
@@ -47,28 +80,27 @@
 
 	<a href="#" class="back-to-top"><i class="icofont-simple-up"></i></a>
 
-	<div class="modal" id="postModal">
+	<div class="modal" id="modifyModal">
 		<div class="modal-dialog">
 			<div class="modal-content">
 				<div class="modal-header">
-					<h4 class="modal-title">공지사항 글쓰기</h4>
+					<h4 class="modal-title">공지사항 수정하기</h4>
 					<button type="button" class="close" data-dismiss="modal">&times;</button>
 				</div>
 				<div class="modal-body">
-					<form action="">
+					<form action="" id="modifyForm">
+					<input type="hidden" id="no" name="no" value="${notice.no }">	
 						<div class="form-group">
 							<label for="title">제목:</label> <input type="text"
-								class="form-control" id="title">
+								class="form-control" id="title" name="title" value="${notice.title }">
 						</div>
 						<div class="form-group">
-							<label for="content">내용:</label>
-							<textarea rows="8" class="form-control" id="content"></textarea>
+							<label for="contents">내용:</label>
+							<textarea rows="8" class="form-control" id="contents" name="contents">${notice.contents }</textarea>
 						</div>
 						<div class="text-center">
-							<button type="button" class="btn btn-primary">글작성</button>
-							<button type="button" class="btn btn-warning">초기화</button>
-							<button type="button" class="btn btn-secondary"
-								data-dismiss="modal">목록</button>
+							<button type="button" class="btn btn-primary" onclick="modifyNotice()">수정</button>
+							<button type="button" class="btn btn-warning" data-dismiss="modal">목록</button>
 						</div>
 					</form>
 				</div>

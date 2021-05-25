@@ -17,16 +17,6 @@ public class HomeController {
 		return "index";
 	}
 	
-	@RequestMapping(value = "/notice", method = RequestMethod.GET)
-	public String notice() {
-		return "notice";
-	}
-	
-	@RequestMapping(value = "/noticeinfo", method = RequestMethod.GET)
-	public String noticeinfo() {
-		return "noticeinfo";
-	}
-	
 	@RequestMapping(value = "/qna", method =  RequestMethod.GET)
 	public String qna() {
 		return "qna";

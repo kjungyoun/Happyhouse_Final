@@ -323,7 +323,7 @@ function pagelist(cpage) {
 					<div class="col-lg-12 ml-auto mt-5" data-aos="fade-up" style="margin-left: auto; margin-right: auto;">
 						<c:choose>
 							<c:when test="${empty list }">
-								<h3 class="text-danger">조회할 상품 정보가 없습니다.</h3>
+								<h3 class="text-danger">조회할 거래 정보가 없습니다.</h3>
 							</c:when>
 							<c:when test="${not empty list}">
 								<ul class="nav nav-tabs flex-column">
@@ -425,7 +425,7 @@ function pagelist(cpage) {
 			<div class="modal-content">
 				<!-- Modal Header -->
 				<div class="modal-header">
-					<h4 class="modal-title"><i class="bx bx-sun mr-1" style="color:red"></i>${dong } 날씨 정보</h4>
+					<h4 class="modal-title"><i class="bx bx-sun mr-1" style="color:red"></i>${list[0].dong } 날씨 정보</h4>
 					<button type="button" class="close" data-dismiss="modal">&times;</button>
 				</div>
 				<!-- Modal body -->
@@ -455,7 +455,7 @@ function pagelist(cpage) {
 			<div class="modal-content">
 				<!-- Modal Header -->
 				<div class="modal-header">
-					<h4 class="modal-title"><i class="bx bx-run mr-1"></i>${dong } 대기질 정보</h4>
+					<h4 class="modal-title"><i class="bx bx-run mr-1"></i>${list[0].dong } 대기질 정보</h4>
 					<button type="button" class="close" data-dismiss="modal">&times;</button>
 				</div>
 				<!-- Modal body -->

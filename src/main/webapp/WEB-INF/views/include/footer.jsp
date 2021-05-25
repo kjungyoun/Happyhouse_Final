@@ -45,7 +45,17 @@
             <h4 class="card-title text-center mt-3">Create Account</h4>
             <form id="signupform" action="" method="post">
             <input type="hidden" name="type" value="register">
-                <div class="check_font" id="validId"></div>
+                <div class="form-group input-group">
+                <div class="input-group-prepend">
+                  <span class="input-group-text"> <i class="fa fa-envelope"></i> </span>
+                </div>
+                <input id = "email" name="email" class="form-control" placeholder="Email address" type="email">
+                <input id = "emailCheck" name="emailCheck" type="hidden">
+                <span class="input-group-btn">
+                <button type="button" id="authBtn" onclick="javascript:authentication();" class="btn btn-warning btn-block ml-1"> 인증하기 </button>
+                </span>
+              </div> <!-- form-group// --> 
+              <div class="check_font" id="validId"></div>
               <div class="form-group input-group">
                 <div class="input-group-prepend">
                     <span class="input-group-text"> <i class="fa fa-user"></i> </span>
@@ -70,16 +80,6 @@
                 </div>
                 <input id = "username" name="username" class="form-control" placeholder="Name" type="text">
               </div> <!-- form-group// -->     
-              <div class="form-group input-group">
-                <div class="input-group-prepend">
-                  <span class="input-group-text"> <i class="fa fa-envelope"></i> </span>
-                </div>
-                <input id = "email" name="email" class="form-control" placeholder="Email address" type="email">
-                <input id = "emailCheck" name="emailCheck" type="hidden">
-                <span class="input-group-btn">
-                <button type="button" id="authBtn" onclick="javascript:authentication();" class="btn btn-warning btn-block ml-1"> 인증하기 </button>
-                </span>
-              </div> <!-- form-group// --> 
               <div class="form-group">
                 <button type="button" onclick="javascript:signup();" class="btn btn-primary btn-block"> 가입하기 </button>
               </div> <!-- form-group// -->      
@@ -103,13 +103,13 @@
                 <div class="input-group-prepend">
                     <span class="input-group-text"> <i class="fa fa-user"></i> </span>
                 </div>
-                <input name="userid" id="useridL" class="form-control" placeholder="ID" type="text">
+                <input name="userid" id="useridL" class="form-control" placeholder="ID" type="text" onkeypress="if(event.keyCode==13){login()}">
               </div> <!-- form-group// -->
               <div class="form-group input-group">
                 <div class="input-group-prepend">
                   <span class="input-group-text"> <i class="fa fa-lock"></i> </span>
                 </div>
-                <input name="userpwd" id="userpwdL" class="form-control" placeholder="Password" type="password">
+                <input name="userpwd" id="userpwdL" class="form-control" placeholder="Password" type="password" onkeypress="if(event.keyCode==13){login()}">
               </div> <!-- form-group// -->
               <div class="form-group">
                 <button type="button" onclick="javascript:login();" id="login-btn" class="btn btn-primary btn-block" > 로그인 </button>

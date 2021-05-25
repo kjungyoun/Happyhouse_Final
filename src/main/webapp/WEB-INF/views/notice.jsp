@@ -3,7 +3,46 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <!DOCTYPE html>
 <html lang="en">
-
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+<script type="text/javascript">
+ $(function(){
+	 $('#search').click(function(){
+		 pagelist(1);
+	 })
+	 <c:if test="${!empty param.key}">
+	 	$('#key').val("${param.key}")
+	 </c:if>
+	 	$('#word').val("${param.word}")
+		$('#pageNo').val("${param.pageNo}")
+ })
+ 
+ function pagelist(cpage){
+		var frm = document.getElementById('frm');
+		var pageNo = document.getElementById('pageNo');
+		pageNo.value=cpage;
+		frm.action="/notice"
+		frm.submit();
+	}
+ 
+ function mvNoticeInfo(no){
+	 location.href="/noticeinfo?no="+no
+ }
+ 
+ function writeNotice(){
+	 if($('#title').val() == ''){
+		 alert('제목을 입력하세요!')
+		 $('#title').focus()
+		 return;
+	 }else if($('#contents').val() == ''){
+		 alert('내용을 입력하세요!')
+		 $('#contents').focus()
+		 return;
+	 }else{
+		 $('#writeForm').attr("action", "/writeNotice")
+		 $('#writeForm').submit()
+	 }
+ }
+</script>
 <body>
   <jsp:include page="include/header.jsp"/>
 
@@ -20,23 +59,26 @@
     <section id="" class="p-1">
       <div class="container">
         <div class="mb-2">
-          <button type="button" id="write-notice" class="btn btn-primary" data-toggle="modal" data-target="#postModal" >글쓰기</button>
-          <form class="form-inline float-right">
+        <c:if test="${userinfo.userid  == 'admin' }">
+          <button type="button" id="write-notice" class="btn btn-warning" data-toggle="modal" data-target="#postModal" >글쓰기</button>
+        </c:if>
+          <form class="form-inline float-right" id="frm">
             <div class="form-group mr-sm-2">
-              <select class="form-control" id="selectOption">
-                <option selected>내용</option>
-                <option>작성일</option>
-                <option>글 번호</option>
+              <select class="form-control" id="key" name="key">
+              <option selected value="title">제목</option>
+                <option value="contents">내용</option>
+                <option value="no">글 번호</option>
               </select>
             </div>
             <div class="form-group mr-sm-2">
-                <input type="text" class="form-control" id="searchKey">
+                <input type="text" class="form-control" id="word" name="word" onkeypress="if(event.keyCode==13){pagelist(1)}">
+                <input type="hidden" 	id="pageNo" 	name="pageNo"   value='${bean.pageNo}'/>
             </div>
-            <button type="submit" class="btn btn-secondary">검색</button>
+            <button type="button" class="btn btn-primary" id="search">검색</button>
           </form>
         </div>
         <div class="p-2 mb-5">        
-            <table class="table table-hover">
+            <table class="table table-hover mt-3">
             <thead>
                 <tr>
                     <th>글번호</th>
@@ -46,40 +88,31 @@
                     <th>작성일</th>
                 </tr>
             </thead>
+            <c:choose>
+            <c:when test="${not empty list }">
+            <c:forEach var="notice" items="${list }">
             <tbody>
-                <tr>
-                    <td>1</td>
-                    <td class="selectPost"><a href="${root}/noticeinfo" style="color: black;">HappyHouse 웹사이트가 서비스를 시작했어요!</a></td>
+                <tr onclick="mvNoticeInfo(${notice.no})">
+                    <td>${notice.no }</td>
+                    <td class="selectPost">${notice.title }</td>
                     <td>관리자</td>
-                    <td>4</td>
-                    <td>2021/03/15</td>
+                    <td>${notice.viewCnt }</td>
+                    <td>${notice.regdate }</td>
                 </tr>
-                <tr>
-                    <td>2</td>
-                    <td class="selectPost"><a href="/postAdmin.jsp" style="color: black;">내일 점심 뭐먹을까 추천해주세요</a></td>
-                    <td>관리자</td>
-                    <td>2</td>
-                    <td>2021/03/13</td>
-                </tr>
-                <tr>
-                    <td>3</td>
-                    <td class="selectPost"><a href="/postAdmin.jsp" style="color: black;">내일 저녁 뭐먹을까 추천해주세요</a></td>
-                    <td>관리자</td>
-                    <td>12</td>
-                    <td>2021/03/10</td>
-                </tr>
+            </c:forEach>
             </tbody>
+            </c:when>
+            <c:otherwise>
+            <tbody>
+            	<td colspan="5" class="text-center text-danger"><h3>공지사항이 없습니다.</h3></td>
+            </tbody>
+            </c:otherwise>
+            </c:choose>
             </table>
         </div>  
         <div class="mt-3">
             <ul class="pagination justify-content-center">
-                <li class="page-item"><a class="page-link" href="#">최신</a></li>
-                <li class="page-item"><a class="page-link" href="#">이전</a></li>
-                <li class="page-item"><a class="page-link" href="#">1</a></li>
-                <li class="page-item active"><a class="page-link" href="#">2</a></li>
-                <li class="page-item"><a class="page-link" href="#">3</a></li>
-                <li class="page-item"><a class="page-link" href="#">다음</a></li>
-                <li class="page-item"><a class="page-link" href="#">마지막</a></li>
+                <li>${bean.pageLink }</li>
             </ul>
         </div>
     </div>
@@ -99,18 +132,18 @@
           <button type="button" class="close" data-dismiss="modal">&times;</button>
         </div>
         <div class="modal-body">
-            <form action="">
+            <form action="" id="writeForm">
                 <div class="form-group">
                   <label for="title">제목:</label>
-                  <input type="text" class="form-control" id="title">
+                  <input type="text" class="form-control" id="title" name="title">
                 </div>
                 <div class="form-group">
                   <label for="content">내용:</label>
-                  <textarea rows="8" class="form-control" id="content"></textarea>
+                  <textarea rows="8" class="form-control" id="contents" name="contents"></textarea>
                 </div>
                 <div class="text-center">
-                    <button type="button" class="btn btn-primary">글작성</button>
-                    <button type="button" class="btn btn-warning">초기화</button>
+                    <button type="button" class="btn btn-primary" onclick="writeNotice()">글작성</button>
+                    <button type="reset" class="btn btn-warning">초기화</button>
                     <button type="button" class="btn btn-secondary" data-dismiss="modal">목록</button>
                 </div>
             </form>

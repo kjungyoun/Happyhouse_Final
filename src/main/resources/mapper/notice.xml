@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+	"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.ssafy.happyhouse.model.mapper.NoticeMapper">
+
+	<!-- 총 데이터 개수 구하기 -->
+	<select id="totalCount" parameterType="pageBean" resultType="int">
+		select count(*) as cnt from notice
+		<where>
+			<if test="key != null and key != 'all' and word != null and word !=''">
+				${key} like concat('%',#{word},'%')
+			</if>
+		</where>
+	</select>
+	
+	<!-- 총 데이터 개수 구하기 -->
+	<select id="searchAll" parameterType="pageBean" resultType="noticeDto">
+		select * from notice
+		<where>
+			<if test="key != null and key != 'all' and word != null and word !=''">
+				${key} like concat('%',#{word},'%')
+			</if>
+		</where>
+		order by no asc
+		limit #{startNo}, #{interval}
+	</select>
+	
+	
+	<select id="getNotice" parameterType="int" resultType="noticeDto">
+		select * from notice
+		where no = #{no}
+	</select>
+	
+	<insert id="insertNotice" parameterType="noticeDto">
+		insert into notice (title, contents, regdate)
+		value(#{title}, #{contents}, now())
+	</insert>
+	
+	<update id="modifyNotice" parameterType="noticeDto">
+		update notice 
+		set title = #{title} , contents = #{contents}, regdate = now()
+		where no = #{no}
+	</update>
+	
+	<delete id="deleteNotice" parameterType="int">
+		delete from notice
+		where no = #{no}
+	</delete>
+	
+	<update id="updateViewCnt" parameterType="int">
+		update notice
+		set viewCnt = viewCnt +1
+		where no = #{no}
+	</update>
+
+</mapper>
