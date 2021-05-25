@@ -12,19 +12,19 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
-import com.ssafy.guestbook.model.GuestBookDto;
-import com.ssafy.guestbook.model.MemberDto;
-import com.ssafy.guestbook.model.service.GuestBookService;
+import com.ssafy.happyhouse.model.NoticeDto;
+import com.ssafy.happyhouse.model.MemberDto;
+import com.ssafy.happyhouse.model.service.NoticeService;
 import com.ssafy.util.PageNavigation;
 
 @Controller
 @RequestMapping("/article")
 public class NoticeController {
 
-	private static final Logger logger = LoggerFactory.getLogger(GuestBookController.class);
+	private static final Logger logger = LoggerFactory.getLogger(NoticeController.class);
 	
 	@Autowired
-	private NoticeService guestBookService;
+	private NoticeService noticeService;
 	
 	@RequestMapping(value = "/write", method = RequestMethod.GET)
 	public String write() {
@@ -32,12 +32,12 @@ public class NoticeController {
 	}
 	
 	@RequestMapping(value = "/write", method = RequestMethod.POST)
-	public String write(GuestBookDto guestBookDto, Model model, HttpSession session) {
+	public String write(NoticeDto noticeDto, Model model, HttpSession session) {
 		MemberDto memberDto = (MemberDto) session.getAttribute("userinfo");
 		if(memberDto != null) {
-			guestBookDto.setUserid(memberDto.getUserid());
+			noticeDto.setUserid(memberDto.getUserid());
 			try {
-				guestBookService.writeArticle(guestBookDto);
+				noticeService.writeArticle(noticeDto);
 				return "guestbook/writesuccess";
 			} catch (Exception e) {
 				e.printStackTrace();
@@ -55,8 +55,8 @@ public class NoticeController {
 		String spp = map.get("spp");
 		map.put("spp", spp != null ? spp : "10");//sizePerPage
 		try {
-			List<GuestBookDto> list = guestBookService.listArticle(map);
-			PageNavigation pageNavigation = guestBookService.makePageNavigation(map);
+			List<NoticeDto> list = noticeService.listArticle(map);
+			PageNavigation pageNavigation = noticeService.makePageNavigation(map);
 			model.addAttribute("articles", list);
 			model.addAttribute("navigation", pageNavigation);
 			return "guestbook/list";
@@ -70,8 +70,8 @@ public class NoticeController {
 	@RequestMapping(value = "/modify", method = RequestMethod.GET)
 	public String modify(@RequestParam("articleno") int articleno, Model model) {
 		try {
-			GuestBookDto guestBookDto = guestBookService.getArticle(articleno);
-			model.addAttribute("article", guestBookDto);
+			NoticeDto noticeDto = noticeService.getArticle(articleno);
+			model.addAttribute("article", noticeDto);
 			return "guestbook/modify";
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -81,12 +81,12 @@ public class NoticeController {
 	}
 	
 	@RequestMapping(value = "/modify", method = RequestMethod.POST)
-	public String modify(GuestBookDto guestBookDto, Model model, HttpSession session) {
+	public String modify(NoticeDto noticeDto, Model model, HttpSession session) {
 		MemberDto memberDto = (MemberDto) session.getAttribute("userinfo");
 		if(memberDto != null) {
-			guestBookDto.setUserid(memberDto.getUserid());
+			noticeDto.setUserid(memberDto.getUserid());
 			try {
-				guestBookService.modifyArticle(guestBookDto);
+				noticeService.modifyArticle(noticeDto);
 				return "guestbook/writesuccess";
 			} catch (Exception e) {
 				e.printStackTrace();
@@ -102,7 +102,7 @@ public class NoticeController {
 	@RequestMapping(value = "/delete", method = RequestMethod.GET)
 	public String delete(@RequestParam("articleno") int articleno, Model model) {
 		try {
-			guestBookService.deleteArticle(articleno);
+			noticeService.deleteArticle(articleno);
 			return "redirect:list?pg=1&key=&word=";
 		} catch (Exception e) {
 			e.printStackTrace();
