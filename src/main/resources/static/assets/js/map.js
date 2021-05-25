@@ -15,9 +15,15 @@ $.ajax({
 		dataType:'json',
 		success: function(data){
 		
-			var imageSrc = 'https://image.flaticon.com/icons/png/512/4565/4565711.png', // 마커이미지의 주소입니다    
+			var imageSrc = 'https://image.flaticon.com/icons/png/512/944/944572.png', // 마커이미지의
+																						// 주소입니다
 		    imageSize = new kakao.maps.Size(50,52), // 마커이미지의 크기입니다
-		    imageOption = {offset: new kakao.maps.Point(27, 69)}; // 마커이미지의 옵션입니다. 마커의 좌표와 일치시킬 이미지 안에서의 좌표를 설정합니다.
+		    imageOption = {offset: new kakao.maps.Point(27, 69)}; // 마커이미지의
+																	// 옵션입니다.
+																	// 마커의 좌표와
+																	// 일치시킬 이미지
+																	// 안에서의 좌표를
+																	// 설정합니다.
 
 			// 마커의 이미지정보를 가지고 있는 마커이미지를 생성합니다
 			var markerImage = new kakao.maps.MarkerImage(imageSrc, imageSize, imageOption)
@@ -34,7 +40,7 @@ $.ajax({
 				
 				// 커스텀 오버레이에 표시할 컨텐츠 입니다
 				// 커스텀 오버레이는 아래와 같이 사용자가 자유롭게 컨텐츠를 구성하고 이벤트를 제어할 수 있기 때문에
-				// 별도의 이벤트 메소드를 제공하지 않습니다 
+				// 별도의 이벤트 메소드를 제공하지 않습니다
 				 var content = document.createElement('div');
 				var inner = `<div class="wrap">
 								<div class="info">
@@ -126,7 +132,8 @@ function commercial(){
 	
 	// 마커를 클릭했을 때 해당 장소의 상세정보를 보여줄 커스텀오버레이입니다
 	var placeOverlay = new kakao.maps.CustomOverlay({zIndex:1}), 
-	    contentNode = document.createElement('div'), // 커스텀 오버레이의 컨텐츠 엘리먼트 입니다 
+	    contentNode = document.createElement('div'), // 커스텀 오버레이의 컨텐츠 엘리먼트
+														// 입니다
 	    markers = [], // 마커를 담을 배열입니다
 	    currCategory = ''; // 현재 선택된 카테고리를 가지고 있을 변수입니다
 	
@@ -136,11 +143,11 @@ function commercial(){
 	// 지도에 idle 이벤트를 등록합니다
 	kakao.maps.event.addListener(map, 'idle', searchPlaces);
 
-	// 커스텀 오버레이의 컨텐츠 노드에 css class를 추가합니다 
+	// 커스텀 오버레이의 컨텐츠 노드에 css class를 추가합니다
 	contentNode.className = 'placeinfo_wrap';
 
 	// 커스텀 오버레이의 컨텐츠 노드에 mousedown, touchstart 이벤트가 발생했을때
-	// 지도 객체에 이벤트가 전달되지 않도록 이벤트 핸들러로 kakao.maps.event.preventMap 메소드를 등록합니다 
+	// 지도 객체에 이벤트가 전달되지 않도록 이벤트 핸들러로 kakao.maps.event.preventMap 메소드를 등록합니다
 	addEventHandle(contentNode, 'mousedown', kakao.maps.event.preventMap);
 	addEventHandle(contentNode, 'touchstart', kakao.maps.event.preventMap);
 
@@ -165,7 +172,7 @@ function commercial(){
 	        return;
 	    }
 	    
-	    // 커스텀 오버레이를 숨깁니다 
+	    // 커스텀 오버레이를 숨깁니다
 	    placeOverlay.setMap(null);
 
 	    // 지도에 표시되고 있는 마커를 제거합니다
@@ -215,12 +222,23 @@ function commercial(){
 
 	// 마커를 생성하고 지도 위에 마커를 표시하는 함수입니다
 	function addMarker(position, order) {
-	    var imageSrc = 'https://t1.daumcdn.net/localimg/localimages/07/mapapidoc/places_category.png', // 마커 이미지 url, 스프라이트 이미지를 씁니다
+	    var imageSrc = 'https://t1.daumcdn.net/localimg/localimages/07/mapapidoc/places_category.png', // 마커
+																										// 이미지
+																										// url,
+																										// 스프라이트
+																										// 이미지를
+																										// 씁니다
 	        imageSize = new kakao.maps.Size(27, 28),  // 마커 이미지의 크기
 	        imgOptions =  {
 	            spriteSize : new kakao.maps.Size(72, 208), // 스프라이트 이미지의 크기
-	            spriteOrigin : new kakao.maps.Point(46, (order*36)), // 스프라이트 이미지 중 사용할 영역의 좌상단 좌표
-	            offset: new kakao.maps.Point(11, 28) // 마커 좌표에 일치시킬 이미지 내에서의 좌표
+	            spriteOrigin : new kakao.maps.Point(46, (order*36)), // 스프라이트
+																		// 이미지 중
+																		// 사용할
+																		// 영역의
+																		// 좌상단
+																		// 좌표
+	            offset: new kakao.maps.Point(11, 28) // 마커 좌표에 일치시킬 이미지 내에서의
+														// 좌표
 	        },
 	        markerImage = new kakao.maps.MarkerImage(imageSrc, imageSize, imgOptions),
 	            marker = new kakao.maps.Marker({
@@ -306,4 +324,93 @@ function commercial(){
 	        el.className = 'on';
 	    } 
 	} 
+}
+
+var markers = [];
+
+function trafficinfo(isMark){
+// $.ajax({
+// type:'GET',
+// url:'http://openapi.seoul.go.kr:8088/47464449426b6a7934324558444c4e/json/busStopLocationXyInfo/1/1000/',
+// dataType:'json',
+// success:function(data){
+// console.log(data)
+// }
+// })
+	
+	// 지하철역 정보 가져오기
+		var positions = [];
+		$.ajax({
+			type:'GET',
+			url:'/subway',
+			dataType:'json',
+			success:function(data){
+				data.forEach(function(item,idx){
+					var obj = {
+							content : '<h5>노선 정보: </h5><div>'+item.name +'역 ('+item.line+')</div>',
+							latlng : new kakao.maps.LatLng(item.lat, item.lng)
+					}
+					positions.push(obj);
+				})
+				var imageSrc = "https://image.flaticon.com/icons/png/512/4551/4551380.png";
+				
+				for (var i = 0; i < positions.length; i ++) {
+				
+				// 마커 이미지의 이미지 크기 입니다
+				 var imageSize = new kakao.maps.Size(50,52); 
+				    
+				// 마커 이미지를 생성합니다
+				var markerImage = new kakao.maps.MarkerImage(imageSrc, imageSize);
+				
+				  // 마커를 생성합니다
+			    var marker = new kakao.maps.Marker({
+			        position: positions[i].latlng, // 마커를 표시할 위치
+			        image : markerImage // 마커 이미지
+			    });
+			    
+			 // 마커에 표시할 인포윈도우를 생성합니다 
+			    var infowindow = new kakao.maps.InfoWindow({
+			        content: positions[i].content // 인포윈도우에 표시할 내용
+			    });
+			    
+			 // 마커에 mouseover 이벤트와 mouseout 이벤트를 등록합니다
+			    // 이벤트 리스너로는 클로저를 만들어 등록합니다 
+			    // for문에서 클로저를 만들어 주지 않으면 마지막 마커에만 이벤트가 등록됩니다
+			    kakao.maps.event.addListener(marker, 'mouseover', makeOverListener(map, marker, infowindow));
+			    kakao.maps.event.addListener(marker, 'mouseout', makeOutListener(infowindow));
+			    
+			    // 생성된 마커를 배열에 추가합니다
+			    markers.push(marker);
+			    
+			}
+				if(isMark == "false"){
+					$('#subwayBtn').val("true")
+					setMarkers(map)    
+				}else{
+					$('#subwayBtn').val("false")
+					setMarkers(null); 
+				}
+		}
+	})
+}
+
+// 마커를 배열에 저장하는 함수
+function setMarkers(map) {
+    for (var i = 0; i < markers.length; i++) {
+        markers[i].setMap(map);
+    }            
+}
+
+//인포윈도우를 표시하는 클로저를 만드는 함수입니다 
+function makeOverListener(map, marker, infowindow) {
+    return function() {
+        infowindow.open(map, marker);
+    };
+}
+
+// 인포윈도우를 닫는 클로저를 만드는 함수입니다 
+function makeOutListener(infowindow) {
+    return function() {
+        infowindow.close();
+    };
 }

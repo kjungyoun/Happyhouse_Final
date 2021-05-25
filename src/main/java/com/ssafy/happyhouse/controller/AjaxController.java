@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.ssafy.happyhouse.model.BaseAddr;
 import com.ssafy.happyhouse.model.HouseDto;
+import com.ssafy.happyhouse.model.SubwayDto;
 import com.ssafy.happyhouse.model.service.AddressService;
 import com.ssafy.happyhouse.model.service.MapService;
 
@@ -63,6 +64,12 @@ public class AjaxController {
 	@GetMapping("/aptPosition")
 	public ResponseEntity<List<HouseDto>> getAptPosition() throws Exception{
 		List<HouseDto> res = mapService.getAptPosition();
+		return new ResponseEntity(res, HttpStatus.OK);
+	}
+	
+	@GetMapping("/subway")
+	public ResponseEntity<List<SubwayDto>> getSubway() throws Exception{
+		List<SubwayDto> res = mapService.getSubway();
 		return new ResponseEntity(res, HttpStatus.OK);
 	}
 	

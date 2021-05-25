@@ -42,4 +42,9 @@
 		and a.dong = b.dong
 	</select>
 	
+	<select id="getSubway" resultType="subwayDto">
+		select line, name, code, lat, lng
+		from subway
+	</select>
+	
 </mapper>

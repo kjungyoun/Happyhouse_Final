@@ -7,6 +7,7 @@ import org.springframework.stereotype.Service;
 
 import com.ssafy.happyhouse.model.BaseAddr;
 import com.ssafy.happyhouse.model.HouseDto;
+import com.ssafy.happyhouse.model.SubwayDto;
 import com.ssafy.happyhouse.model.mapper.MapMapper;
 
 @Service
@@ -23,6 +24,11 @@ public class MapServiceImpl implements MapService {
 	@Override
 	public List<HouseDto> getAptPosition()throws Exception {
 		return map.getAptPosition();
+	}
+
+	@Override
+	public List<SubwayDto> getSubway() throws Exception {
+		return map.getSubway();
 	}
 
 }
