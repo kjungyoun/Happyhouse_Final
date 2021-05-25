@@ -285,14 +285,15 @@ function pagelist(cpage) {
 
 							<div class="form-group d-inline-block">
 								<button type="button" class="btn btn-primary mb-1"
-									onclick="mvLocation()">검색</button>
+									onclick="mvLocation()"><i class="bx bx-search mr-1"></i>검색</button>
 							</div>
-							<button type="button" class="btn btn-info" onclick="commercial()">상권
-								정보</button>
+							<button type="button" class="btn btn-danger" onclick="commercial()"><i class="bx bx-store mr-1"></i>상권</button>
 							<button type="button" class="btn btn-success" data-toggle="modal"
-								data-target="#weatherModal">날씨 정보</button>
+								data-target="#weatherModal"><i class="bx bx-cloud mr-1"></i>날씨</button>
 							<button type="button" class="btn btn-warning" data-toggle="modal"
-								data-target="#airpollutionModal">대기질 정보</button>
+								data-target="#airpollutionModal"><i class="bx bx-health mr-1"></i>대기질</button>
+								<button type="button" class="btn btn-secondary" data-toggle="modal"
+								data-target="#airpollutionModal"><i class="bx bx-trip mr-1"></i>교통 정보</button>
 
 						</form>
 						
@@ -424,7 +425,7 @@ function pagelist(cpage) {
 			<div class="modal-content">
 				<!-- Modal Header -->
 				<div class="modal-header">
-					<h4 class="modal-title">${dong } 날씨 정보</h4>
+					<h4 class="modal-title"><i class="bx bx-sun mr-1" style="color:red"></i>${dong } 날씨 정보</h4>
 					<button type="button" class="close" data-dismiss="modal">&times;</button>
 				</div>
 				<!-- Modal body -->
@@ -454,7 +455,7 @@ function pagelist(cpage) {
 			<div class="modal-content">
 				<!-- Modal Header -->
 				<div class="modal-header">
-					<h4 class="modal-title">${dong } 대기질 정보</h4>
+					<h4 class="modal-title"><i class="bx bx-run mr-1"></i>${dong } 대기질 정보</h4>
 					<button type="button" class="close" data-dismiss="modal">&times;</button>
 				</div>
 				<!-- Modal body -->

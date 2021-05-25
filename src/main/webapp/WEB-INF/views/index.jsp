@@ -6,7 +6,6 @@
 <html lang="en">
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 <script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey=91faec44501a2bd12af0827ba9208626&libraries=services,clusterer,drawing"></script>
-<script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey=91faec44501a2bd12af0827ba9208626&libraries=services,clusterer,drawing"></script>
 <script type="text/javascript">
 	$(document).ready(function(){
 		if('${msg}'){
@@ -72,17 +71,21 @@
             <h3 data-aos="fade-up">About Happy House</h3>
             <p data-aos="fade-up">
               SSAFY 5기 8반 김정윤 조혜민 SpringBoot Project 입니다.
+              <br>
+              원하는 지역의 아파트 거래 내역을 조회해보세요!
+              <br>
+              지도의 다양한 기능을 이용해보세요!
             </p>
             <div class="icon-box" data-aos="fade-up">
-              <i class="bx bx-receipt"></i>
+              <i class="bx bx-desktop"></i>
               <h4>관리자 아이디와 비밀번호</h4>
               <p>아이디가 'admin'이면 모두가 관리자입니다.</p>
             </div>
 
             <div class="icon-box" data-aos="fade-up" data-aos-delay="100">
-              <i class="bx bx-cube-alt"></i>
-              <h4>SpringBoot</h4>
-              <p>SpringBoot를 이용한 웹페이지 입니다.</p>
+              <i class="bx bx-map"></i>
+              <h4>Map</h4>
+              <p>Kakao Map API를 이용하여 다양한 편리 기능을 이용하실 수 있습니다.</p>
             </div>
           </div>
         </div>
@@ -100,38 +103,53 @@
         </div>
 
         <div class="row">
-          <div class="col-md-6 col-lg-3 d-flex align-items-stretch mb-5 mb-lg-0" data-aos="fade-up">
+          <div class="col-md-6 col-lg-2 d-flex align-items-stretch mb-5 mb-lg-0" data-aos="fade-up">
             <div class="icon-box icon-box-pink">
               <div class="icon"><i class="bx bx-tachometer"></i></div>
               <h4 class="title"><a href="">실거래가 검색</a></h4>
-              <p class="description">선택한 지역의 아파트 실거래가를 동별로 그리고 아파트별로 검색할 수 있습니다.</p>
+              <p class="description">선택한 지역의 아파트 실거래가를 동별로 검색할 수 있습니다.</p>
             </div>
           </div>
 
-          <div class="col-md-6 col-lg-3 d-flex align-items-stretch mb-5 mb-lg-0" data-aos="fade-up" data-aos-delay="100">
+          <div class="col-md-6 col-lg-2 d-flex align-items-stretch mb-5 mb-lg-0" data-aos="fade-up" data-aos-delay="100">
             <div class="icon-box icon-box-cyan">
               <div class="icon"><i class="bx bxl-dribbble"></i></div>
-              <h4 class="title"><a href="">주변 상권 정보</a></h4>
+              <h4 class="title"><a href="">주변 상권</a></h4>
               <p class="description">선택한 아파트 주변 동네업종 정보를 확인할 수 있습니다.</p>
             </div>
           </div>
 
-          <div class="col-md-6 col-lg-3 d-flex align-items-stretch mb-5 mb-lg-0" data-aos="fade-up" data-aos-delay="200">
+          <div class="col-md-6 col-lg-2 d-flex align-items-stretch mb-5 mb-lg-0" data-aos="fade-up" data-aos-delay="200">
             <div class="icon-box icon-box-green">
               <div class="icon"><i class="bx bx-world"></i></div>
-              <h4 class="title"><a href="">대기오염 정보</a></h4>
-              <p class="description">선택한 지역의 미세먼지 농도 등의 대기오염 정보를 확인할 수 있습니다.</p>
+              <h4 class="title"><a href="">주변 환경</a></h4>
+              <p class="description">선택한 지역의 날씨, 미세먼지 농도 등의 대기오염 정보를 확인할 수 있습니다.</p>
             </div>
           </div>
 
-          <div class="col-md-6 col-lg-3 d-flex align-items-stretch mb-5 mb-lg-0" data-aos="fade-up" data-aos-delay="300">
+          <div class="col-md-6 col-lg-2 d-flex align-items-stretch mb-5 mb-lg-0" data-aos="fade-up" data-aos-delay="300">
+            <div class="icon-box ">
+              <div class="icon"><i class="bx bx-bus" style = "color:purple;"></i></div>
+              <h4 class="title"><a href="">교통 정보</a></h4>
+              <p class="description">선택한 지역의 교통 정보를 확인할 수 있습니다.</p>
+            </div>
+          </div>
+          
+          <div class="col-md-6 col-lg-2 d-flex align-items-stretch mb-5 mb-lg-0" data-aos="fade-up" data-aos-delay="300">
             <div class="icon-box icon-box-blue">
-              <div class="icon"><i class="bx bx-file"></i></div>
+              <div class="icon"><i class="bx bx-message"></i></div>
               <h4 class="title"><a href="">공지사항</a></h4>
               <p class="description">관리자는 공지사항을 작성, 수정, 삭제, 검색할 수 있습니다.</p>
             </div>
           </div>
-
+			
+			<div class="col-md-6 col-lg-2 d-flex align-items-stretch mb-5 mb-lg-0" data-aos="fade-up" data-aos-delay="300">
+            <div class="icon-box">
+              <div class="icon"><i class="bx bx-send" style="color: orange;"></i></div>
+              <h4 class="title"><a href="">이메일</a></h4>
+              <p class="description">이메일 인증을 통해 회원 가입, 비밀번호 찾기를 할 수 있습니다.</p>
+            </div>
+          </div>
         </div>
 
       </div>
@@ -173,10 +191,7 @@
             
 	</div> 
     <div class="card-footer">
-		<div class="text-center">
-                <button type="button" class="btn btn-primary" onclick="location.href='/pollutionInfo'">환경정보 보러가기</button>
-              <button type="button" class="btn btn-warning ml-2" onclick="location.href='/shopInfo'">주변상권 보러가기</button>
-           </div>   
+		<h4 class="text-center text-success">검색하고 싶은 동을 입력한 후 로고를 클릭하여 상세 결과를 확인해보세요!</h4>
 	</div>
   </div>     
  	</div>
