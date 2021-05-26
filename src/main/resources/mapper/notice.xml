@@ -16,7 +16,7 @@
 	
 	<!-- 총 데이터 개수 구하기 -->
 	<select id="searchAll" parameterType="pageBean" resultType="noticeDto">
-		select * from notice
+		select no, title, contents, viewCnt, date_format(regdate,'%Y/%m/%d')as regdate from notice
 		<where>
 			<if test="key != null and key != 'all' and word != null and word !=''">
 				${key} like concat('%',#{word},'%')
@@ -28,7 +28,7 @@
 	
 	
 	<select id="getNotice" parameterType="int" resultType="noticeDto">
-		select * from notice
+		select no, title, contents, viewCnt, date_format(regdate,'%Y/%m/%d') as regdate from notice
 		where no = #{no}
 	</select>
 	

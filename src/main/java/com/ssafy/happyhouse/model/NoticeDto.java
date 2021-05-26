@@ -6,7 +6,7 @@ public class NoticeDto {
 	private int no;
 	private String title;
 	private String contents;
-	private Date regdate;
+	private String regdate;
 	private int viewCnt;
 	
 	public NoticeDto() {}
@@ -18,7 +18,7 @@ public class NoticeDto {
 	}
 
 
-	public NoticeDto(int no, String title, String contents, Date regdate, int viewCnt) {
+	public NoticeDto(int no, String title, String contents, String regdate, int viewCnt) {
 		super();
 		this.no = no;
 		this.title = title;
@@ -67,11 +67,11 @@ public class NoticeDto {
 		this.contents = contents;
 	}
 
-	public Date getRegdate() {
+	public String getRegdate() {
 		return regdate;
 	}
 
-	public void setRegdate(Date regdate) {
+	public void setRegdate(String regdate) {
 		this.regdate = regdate;
 	}
 	
