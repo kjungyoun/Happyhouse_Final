@@ -91,7 +91,7 @@
                 <div class="input-group-prepend">
                     <span class="input-group-text"> <i class="fa fa-user"></i> </span>
                 </div>
-                <input id="useridU" name="userid" class="form-control" value="${userinfo.userid}" type="text">
+                <input id="useridU" name="userid" class="form-control" value="${userinfo.userid}" readonly type="text">
               </div> <!-- form-group// -->
               <div class="form-group input-group">
                 <div class="input-group-prepend">
@@ -109,7 +109,7 @@
                 <div class="input-group-prepend">
                   <span class="input-group-text"> <i class="fa fa-envelope"></i> </span>
                 </div>
-                <input id="emailU" name="email" class="form-control" value="${userinfo.email}" type="email">
+                <input id="emailU" name="email" class="form-control" value="${userinfo.email}" readonly type="email">
               </div> <!-- form-group// --> 
               <div class="form-group">
                 <button type="button" onclick="updateProfile();" class="btn btn-primary btn-block"> 수정하기 </button>

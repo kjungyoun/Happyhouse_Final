@@ -21,7 +21,7 @@
 				${key} like concat('%',#{word},'%')
 			</if>
 		</where>
-		order by no desc limit #{startNo}, #{interval};
+		order by no asc
 	</select>
 	
 	<select id="totalCount"   parameterType="pageBean"  resultType="int"  >
